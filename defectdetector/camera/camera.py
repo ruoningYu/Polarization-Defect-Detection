@@ -2,7 +2,7 @@ import PySpin
 import numpy as np
 
 from PySide6.QtCore import Slot
-from controller import Controller
+from defectdetector.controller import Controller
 from .nodemap import get_whole_nodemap
 
 

@@ -1,6 +1,6 @@
 
-from transforms import BaseTransform, Transforms
-from detector import Detector
+from defectdetector.transforms import BaseTransform, Transforms
+from defectdetector.detector import Detector
 
 
 class Pipeline:
