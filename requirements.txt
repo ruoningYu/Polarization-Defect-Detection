@@ -1,0 +1,8 @@
+certifi==2021.10.8
+numpy==1.22.3
+opencv-python==4.5.5.64
+PySide6==6.3.0
+PySide6-Addons==6.3.0
+PySide6-Essentials==6.3.0
+spinnaker-python spinnaker_python-2.6.0.157-cp38-cp38-win_amd64.whl
+
