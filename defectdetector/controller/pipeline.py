@@ -33,5 +33,5 @@ class Pipeline:
 
     def run(self, frame):
         for p in self.pipeline:
-           frame = p(frame)
+           frame = p()(frame)
         return frame

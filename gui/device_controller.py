@@ -1,27 +1,27 @@
 
-from PySide6.QtCore import (QMetaObject, QCoreApplication, QStringListModel)
-from PySide6.QtWidgets import (QSizePolicy, QHBoxLayout, QVBoxLayout,
+from PySide6.QtCore import (QMetaObject, QCoreApplication, QStringListModel, Signal)
+from PySide6.QtWidgets import (QSizePolicy, QHBoxLayout, QVBoxLayout, QWidget,
                                QTabWidget, QWidget, QListView, QTreeView, QHeaderView)
 from PySide6.QtGui import (QStandardItemModel, QStandardItem)
 
 
-class DeviceController:
+class DeviceController(QWidget):
 
-    def __init__(self, camera):
+
+    def __init__(self, camera=None, parent=None):
+        super(DeviceController, self).__init__(parent)
         self.cam = camera
-
-    def setup(self, Form):
         print("初始化设备控制台···")
-        if not Form.objectName():
-            Form.setObjectName(u"Form")
-        Form.resize(500, 500)
-        self.verticalLayout = QVBoxLayout(Form)
+
+        self.setObjectName(u"Form")
+        self.resize(500, 500)
+        self.verticalLayout = QVBoxLayout(self)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
 
-        self.tabWidget = QTabWidget(Form)
+        self.tabWidget = QTabWidget(self)
         self.tabWidget.setObjectName(u"tabWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -32,10 +32,10 @@ class DeviceController:
 
         self.horizontalLayout.addWidget(self.tabWidget)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.retranslate(Form)
+        self.retranslate(self)
         self.tabWidget.setCurrentIndex(0)
 
-        QMetaObject.connectSlotsByName(Form)
+        QMetaObject.connectSlotsByName(self)
 
     def retranslate(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
@@ -77,6 +77,7 @@ class DeviceController:
 
         control_feature_tree = QTreeView(tab)
         verticalLayout.addWidget(control_feature_tree)
+        
         feature_model = self.get_feature_model()
         control_feature_tree.setModel(feature_model)
         control_feature_tree.header().setSectionResizeMode(QHeaderView.Stretch)

@@ -27,11 +27,9 @@ class Camera(Controller):
 
     def __init__(self):
         super(Camera, self).__init__()
-        self.cap_status = False
 
     def get_node_map(self):
-        self.nodemap = get_whole_nodemap(self.current_cam)
-        return self.nodemap
+        return get_whole_nodemap(self.current_cam)
 
     def init_camera(self):
         """
@@ -40,13 +38,14 @@ class Camera(Controller):
         -------
 
         """
-        self.cap_status = True
 
         try:
-            nodemap = self.current_cam.GetNodeMap()
+            self.nodemap = self.current_cam.GetNodeMap()
+
             self.set_pixel_format()
-            buffer_flag = self.set_buffer()
-            node_acquisition_mode = PySpin.CEnumerationPtr(nodemap.GetNode('AcquisitionMode'))
+            self.set_buffer()
+            self.configure_trigger()
+            node_acquisition_mode = PySpin.CEnumerationPtr(self.nodemap.GetNode('AcquisitionMode'))
             if not PySpin.IsAvailable(node_acquisition_mode) or not PySpin.IsWritable(node_acquisition_mode):
                 print('Unable to set acquisition mode to continuous (enum retrieval). Aborting...')
                 return False
@@ -65,29 +64,8 @@ class Camera(Controller):
             print("相加初始化失败！", ex)
 
     def configure_trigger(self):
-        """
-        This function configures the camera to use a trigger. First, trigger mode is
-        set to off in order to select the trigger source. Once the trigger source
-        has been selected, trigger mode is then enabled, which has the camera
-        capture only a single image upon the execution of the chosen trigger.
 
-        Note that if the application / user software triggers faster than frame time,
-        the trigger may be dropped / skipped by the camera.
-
-        If several frames are needed per trigger, a more reliable alternative for such case,
-        is to use the multi-frame mode.
-
-         :param cam: Camera to configure trigger for.
-         :type cam: CameraPtr
-         :return: True if successful, False otherwise.
-         :rtype: bool
-        """
         result = True
-
-        if CHOSEN_TRIGGER == TriggerType.SOFTWARE:
-            print('Software trigger chosen ...')
-        elif CHOSEN_TRIGGER == TriggerType.HARDWARE:
-            print('Hardware trigger chose ...')
 
         try:
             # Ensure trigger mode off
@@ -168,14 +146,8 @@ class Camera(Controller):
         return result
 
     def grab_next_image_by_trigger(self):
-        """
-        This function acquires an image by executing the trigger node.
 
-        :return: True if successful, False otherwise.
-        :rtype: bool
-        """
         try:
-            result = True
             # Use trigger to capture image
             # The software trigger only feigns being executed by the Enter key;
             # what might not be immediately apparent is that there is not a
@@ -184,9 +156,6 @@ class Camera(Controller):
             # When an image is retrieved, it is plucked from the stream.
 
             if CHOSEN_TRIGGER == TriggerType.SOFTWARE:
-                # Get user input
-                input('Press the Enter key to initiate software trigger.')
-
                 # Execute software trigger
                 node_softwaretrigger_cmd = PySpin.CCommandPtr(self.nodemap.GetNode('TriggerSoftware'))
                 if not PySpin.IsAvailable(node_softwaretrigger_cmd) or not PySpin.IsWritable(node_softwaretrigger_cmd):
@@ -195,16 +164,16 @@ class Camera(Controller):
 
                 node_softwaretrigger_cmd.Execute()
 
-                # TODO: Blackfly and Flea3 GEV cameras need 2 second delay after software trigger
-
             elif CHOSEN_TRIGGER == TriggerType.HARDWARE:
                 print('Use the hardware to trigger image acquisition.')
+
+            img = self.capture()
 
         except PySpin.SpinnakerException as ex:
             print('Error: %s' % ex)
             return False
 
-        return result
+        return img
 
     def capture(self):
         """
@@ -214,36 +183,28 @@ class Camera(Controller):
 
         """
 
-        # while global_value.get_value('READY') & global_value.get_value('STATUS'):
-        while self.cam_start:
-            frame = self.cam.GetNextImage(1000)
+        frame = self.current_cam.GetNextImage(1000)
+        if frame.IsIncomplete():
+            raise print('Image incomplete with image status %d ...' % frame.GetImageStatus())
+        else:
+            _data = frame.GetData()
+            _height = frame.GetHeight()
+            _width = frame.GetWidth()
+            _channels = frame.GetNumChannels()
+            image = np.reshape(_data, (_height, _width, _channels))
+        frame.Release()
+        return image
 
-            image_data = frame.GetData()
-            image_height = frame.GetHeight()
-            image_width = frame.GetWidth()
-            image_channels = frame.GetNumChannels()
-
-            # self.raw_buffer.push(image_data)
-
-            image = np.reshape(image_data, (image_height, image_width, image_channels))
-            # if len(self.raw_buffer) == 1:
-            #     self.saveimg.start()
-
-            # img_data = np.reshape(img_data, ())
-            if frame.IsIncomplete():
-                print('Image incomplete with image status %d ...' % frame.GetImageStatus())
-            else:
-                # print(len(self.buffer._buffer_list))
-                frame.Release()
-
-        self.cam.EndAcquisition()
+    def stop(self):
+        self.current_cam.EndAcquisition()
+        self.reset_trigger()
 
     def set_pixel_format(self):
         node_pixel_format = PySpin.CEnumerationPtr(self.nodemap.GetNode('PixelFormat'))
         if PySpin.IsAvailable(node_pixel_format) and PySpin.IsWritable(node_pixel_format):
 
             # Retrieve the desired entry node from the enumeration node
-            node_pixel_format_current = PySpin.CEnumEntryPtr(node_pixel_format.GetEntryByName('Polarized16'))
+            node_pixel_format_current = PySpin.CEnumEntryPtr(node_pixel_format.GetEntryByName('Polarized8'))
             if PySpin.IsAvailable(node_pixel_format_current) and PySpin.IsReadable(node_pixel_format_current):
 
                 # Retrieve the integer value from the entry node
@@ -292,3 +253,34 @@ class Camera(Controller):
             return True
         except:
             return False
+
+    def reset_trigger(self):
+        """
+        This function returns the camera to a normal state by turning off trigger mode.
+
+        :param nodemap: Transport layer device nodemap.
+        :type nodemap: INodeMap
+        :returns: True if successful, False otherwise.
+        :rtype: bool
+        """
+        try:
+            result = True
+            node_trigger_mode = PySpin.CEnumerationPtr(self.nodemap.GetNode('TriggerMode'))
+            if not PySpin.IsAvailable(node_trigger_mode) or not PySpin.IsReadable(node_trigger_mode):
+                print('Unable to disable trigger mode (node retrieval). Aborting...')
+                return False
+
+            node_trigger_mode_off = node_trigger_mode.GetEntryByName('Off')
+            if not PySpin.IsAvailable(node_trigger_mode_off) or not PySpin.IsReadable(node_trigger_mode_off):
+                print('Unable to disable trigger mode (enum entry retrieval). Aborting...')
+                return False
+
+            node_trigger_mode.SetIntValue(node_trigger_mode_off.GetValue())
+
+            print('Trigger mode disabled...')
+
+        except PySpin.SpinnakerException as ex:
+            print('Error: %s' % ex)
+            result = False
+
+        return result

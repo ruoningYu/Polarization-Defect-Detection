@@ -1,22 +1,46 @@
-
+import time
 import PySpin
+import threading
 
-from PySide6.QtCore import Slot
+from PySide6.QtCore import Slot, Signal, QObject, QThread
+from PySide6.QtGui import QImage
 
 from .enumration import Enumeration
 from .pipeline import Pipeline
+from defectdetector.transforms import Transforms
+from defectdetector.detector import Detector
 
 
-class Controller:
+class Buffer:
+
+    raw_data_list = []
+
+    def push(self, image):
+        if len(self.raw_data_list) != 0:
+            self.raw_data_list.pop()
+        self.raw_data_list.append(image)
+
+    def pop(self):
+        return self.raw_data_list.pop()
+
+
+class Controller(QObject):
     """
     用于控制相机和检测器
     """
 
+    update_frame = Signal(QImage)
+
     def __init__(self):
+        super(Controller, self).__init__()
         self.system = PySpin.System.GetInstance()
         self.device_enum = Enumeration()
         self.current_cam = None
-        self.pipeline = Pipeline()
+        self.buffer = Buffer()
+        self.pipeline = Pipeline(
+            Transforms.METHOD
+        )
+        # self.pipeline.add(Detector())
 
     def get_interface_model(self):
         """
@@ -50,9 +74,13 @@ class Controller:
         """
         return self.current_cam if self.current_cam else None
 
-    def capture_img(self):
+    def grab_next_image_by_trigger(self):
         pass
 
-    def run(self):
-        frame = self.capture_img()
-        self.pipeline.run(frame)
+    def get_frame(self):
+        frame = self.grab_next_image_by_trigger()
+        res =self.pipeline.run(frame)
+        self.buffer.push(res)
+
+    def stop(self):
+        pass
