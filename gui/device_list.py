@@ -1,29 +1,31 @@
 
 from PySide6.QtCore import (QMetaObject, Qt, QCoreApplication, Slot)
 from PySide6.QtGui import QStandardItemModel, QStandardItem
-from PySide6.QtWidgets import (QSizePolicy, QHBoxLayout, QStyleFactory,
+from PySide6.QtWidgets import (QSizePolicy, QHBoxLayout, QStyleFactory, QWidget,
                                QVBoxLayout, QPushButton, QTreeView, QHeaderView)
 
+from device_controller import DeviceController
 
-class DeviceList:
 
-    def __init__(self,camera):
+class DeviceList(QWidget):
+
+    def __init__(self, camera, parent=None):
+        super(DeviceList, self).__init__()
         self.cam = camera
-
-    def setup(self, Form):
+        self.parent = parent
         print("初始化设备列表···")
-        if not Form.objectName():
-            Form.setObjectName(u"DeviceInfo")
-        Form.setWindowModality(Qt.NonModal)
-        Form.resize(300, 500)
+
+        self.setObjectName(u"DeviceInfo")
+        self.setWindowModality(Qt.NonModal)
+        self.resize(300, 500)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
-        Form.setSizePolicy(sizePolicy)
-        Form.setContextMenuPolicy(Qt.CustomContextMenu)
+        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        self.setSizePolicy(sizePolicy)
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
 
-        self.horizontalLayout_2 = QHBoxLayout(Form)
+        self.horizontalLayout_2 = QHBoxLayout(self)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -31,7 +33,7 @@ class DeviceList:
         self.refleshDeviceButton = QPushButton()
         self.refleshDeviceButton.clicked.connect(self.choose_camera)
 
-        self.CameraInfo = QTreeView(Form)
+        self.CameraInfo = QTreeView(self)
         self.CameraInfo.setObjectName(u"treeView")
 
         self.verticalLayout.addWidget(self.CameraInfo)
@@ -39,9 +41,9 @@ class DeviceList:
 
         self.horizontalLayout_2.addLayout(self.verticalLayout)
 
-        self.retranslate(Form)
+        self.retranslate(self)
 
-        QMetaObject.connectSlotsByName(Form)
+        QMetaObject.connectSlotsByName(self)
 
     def retranslate(self, DeviceInfo):
         self.refleshDeviceButton.setText(
@@ -73,6 +75,13 @@ class DeviceList:
         self.CameraInfo.setStyle(QStyleFactory.create('windows'))
         # 全部展开
         self.CameraInfo.expandAll()
-        self.CameraInfo.selectionModel().currentChanged.connect(self.cam.select_camera)
+        self.CameraInfo.selectionModel().currentChanged.connect(self.load_cam_info)
         self.CameraInfo.header().setSectionResizeMode(QHeaderView.Stretch)
         self.CameraInfo.header().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+
+    def load_cam_info(self, cam_id):
+        controller = DeviceController(self.cam)
+        self.cam.select_camera(cam_id)
+        self.cam.init_camera()
+        controller.refresh_feature_data()
+        self.parent.load_current_cam_info(controller)
