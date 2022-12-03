@@ -8,7 +8,7 @@ from PySide6.QtGui import QImage
 from .enumration import Enumeration
 from .pipeline import Pipeline
 from defectdetector.transforms import Transforms
-from defectdetector.detector import Detector
+from defectdetector.detector import YoloxDetector
 
 
 class Buffer:
@@ -40,7 +40,7 @@ class Controller(QObject):
         self.pipeline = Pipeline(
             Transforms.METHOD
         )
-        # self.pipeline.add(Detector())
+        self.pipeline.add(YoloxDetector())
 
     def get_interface_model(self):
         """
