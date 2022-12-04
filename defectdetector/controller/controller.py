@@ -1,6 +1,7 @@
 import time
 import PySpin
 import threading
+import cv2
 
 from PySide6.QtCore import Slot, Signal, QObject, QThread
 from PySide6.QtGui import QImage
@@ -12,16 +13,15 @@ from defectdetector.detector import YoloxDetector
 
 
 class Buffer:
-
-    raw_data_list = []
+    data_list = []
 
     def push(self, image):
-        if len(self.raw_data_list) != 0:
-            self.raw_data_list.pop()
-        self.raw_data_list.append(image)
+        if len(self.data_list) != 0:
+            self.data_list.pop()
+        self.data_list.append(image)
 
     def pop(self):
-        return self.raw_data_list.pop()
+        return self.data_list.pop()
 
 
 class Controller(QObject):
@@ -40,7 +40,7 @@ class Controller(QObject):
         self.pipeline = Pipeline(
             Transforms.METHOD
         )
-        self.pipeline.add(YoloxDetector())
+        self.pipeline.add(YoloxDetector)
 
     def get_interface_model(self):
         """
@@ -79,7 +79,8 @@ class Controller(QObject):
 
     def get_frame(self):
         frame = self.grab_next_image_by_trigger()
-        res =self.pipeline.run(frame)
+        self.buffer.push(frame)
+        res = self.pipeline.run(self.buffer.pop())
         self.buffer.push(res)
 
     def stop(self):

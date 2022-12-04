@@ -5,7 +5,7 @@ import cv2
 class YoloX:
     def __init__(self, modelPath, confThreshold=0.35, nmsThreshold=0.5, objThreshold=0.5, backendId=0, targetId=0):
         self.num_classes = 80
-        self.net = cv2.dnn.readNet(modelPath)
+        self.net = cv2.dnn.readNetFromONNX(modelPath)
         self.input_size = (640, 640)
         self.mean = np.array([0.485, 0.456, 0.406], dtype=np.float32).reshape(1, 1, 3)
         self.std = np.array([0.229, 0.224, 0.225], dtype=np.float32).reshape(1, 1, 3)

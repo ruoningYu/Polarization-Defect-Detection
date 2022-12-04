@@ -19,10 +19,8 @@ class Pipeline:
         return _pipeline
 
     def add(self, processor):
-        if isinstance(processor, BaseTransform or Detector):
-            self.pipeline.append(processor)
-        else:
-            raise Exception('插入错误！')
+        print(type(processor))
+        self.pipeline.append(processor)
 
     def remove(self, name):
         for i, p in enumerate(self.pipeline):
