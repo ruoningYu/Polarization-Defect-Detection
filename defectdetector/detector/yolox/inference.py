@@ -9,8 +9,8 @@ class YoloxDetector(Detector):
 
     def __init__(self):
         super(YoloxDetector, self).__init__()
-        self.model = "./yolox_s.onnx"
-        self.confidence = 0.5
+        self.model = "C:\\Users\Ruoning\\Desktop\\Project\\Polarization-Defect-Detection\\defectdetector\\detector\\yolox\\yolox_s.onnx"
+        self.confidence = 0.75
         self.nms = 0.5
         self.obj = 0.5
 
@@ -57,6 +57,10 @@ class YoloxDetector(Detector):
         for det in dets:
             box = self.unletterbox(det[:4], letterbox_scale).astype(np.int32)
             score = det[-2]
+            
+            if score < 0.5:
+                continue
+
             cls_id = int(det[-1])
 
             x0, y0, x1, y1 = box
@@ -76,14 +80,13 @@ class YoloxDetector(Detector):
         tm = cv2.TickMeter()
         tm.reset()
 
-        input_blob = cv2.cvtColor(input, cv2.COLOR_BGR2RGB)
-        input_blob, letterbox_scale = self.letterbox(input_blob)
+        input_blob, letterbox_scale = self.letterbox(input)
+
 
         # Inference
         tm.start()
         preds = self.model_net.infer(input_blob)
         tm.stop()
-        print("Inference time: {:.2f} ms".format(tm.getTimeMilli()))
 
         img = self.vis(preds, input, letterbox_scale)
 
