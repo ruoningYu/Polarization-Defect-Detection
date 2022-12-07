@@ -79,8 +79,8 @@ class Controller(QObject):
 
     def get_frame(self):
         frame = self.grab_next_image_by_trigger()
-        self.buffer.push(frame)
-        res = self.pipeline.run(self.buffer.pop())
+        # self.buffer.push(frame)
+        res = self.pipeline.run(frame)
         self.buffer.push(res)
 
     def stop(self):
