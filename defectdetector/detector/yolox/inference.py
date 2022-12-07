@@ -57,7 +57,7 @@ class YoloxDetector(Detector):
         for det in dets:
             box = self.unletterbox(det[:4], letterbox_scale).astype(np.int32)
             score = det[-2]
-
+            
             if score < 0.5:
                 continue
 
@@ -81,6 +81,7 @@ class YoloxDetector(Detector):
         tm.reset()
 
         input_blob, letterbox_scale = self.letterbox(input)
+
 
         # Inference
         tm.start()

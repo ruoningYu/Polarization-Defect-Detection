@@ -42,6 +42,7 @@ class Controller(QObject):
         )
         self.pipeline.add(YoloxDetector)
 
+
     def get_interface_model(self):
         """
         获取主机上的接口列表
