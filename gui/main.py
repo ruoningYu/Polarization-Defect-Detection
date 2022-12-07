@@ -66,7 +66,7 @@ class Ui_MainWindow(QMainWindow):
     def retranslate(self):
         self.setWindowTitle(
             QCoreApplication.translate(
-                "MainWindow", u"\u7acb\u654f\u8fbe\u7f3a\u9677\u68c0\u6d4b\u7cfb\u7edf", None))
+                "MainWindow", u"\u7f3a\u9677\u68c0\u6d4b\u7cfb\u7edf", None))
         self.actionHELP.setText(QCoreApplication.translate("MainWindow", u"HELP", None))
         self.actionABOUT.setText(QCoreApplication.translate("MainWindow", u"ABOUT", None))
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u5e2e\u52a9", None))
