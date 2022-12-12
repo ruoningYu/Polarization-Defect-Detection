@@ -195,6 +195,9 @@ class Camera(Controller):
         frame.Release()
         return image
 
+    def get_fps(self):
+        pass
+
     def stop(self):
         self.current_cam.EndAcquisition()
         self.reset_trigger()

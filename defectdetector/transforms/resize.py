@@ -23,4 +23,3 @@ class ConvertColorspace(BaseTransform):
                  convert_mode='COLOR_GRAY2RGB'):
         res = cv.cvtColor(img, getattr(cv, convert_mode))
         return res
-
