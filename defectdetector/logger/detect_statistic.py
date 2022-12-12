@@ -6,6 +6,7 @@ from typing import Dict
 from logging import Handler, LogRecord
 
 
+
 class DetectStatistic:
 
     STATISTIC_INFO = dict()
@@ -21,6 +22,7 @@ class DetectStatistic:
         if not root:
             root = os.path.dirname(os.path.abspath(__file__))
         self.current_data = time.strftime("%Y-%m-%d", time.localtime())
+        
         log_path = os.path.join(root, 'log', self.current_data)
 
         if not os.path.exists(log_path):

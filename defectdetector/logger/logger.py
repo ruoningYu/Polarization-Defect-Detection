@@ -3,7 +3,9 @@ import time
 
 from .record_buffer import RecordBuffer
 from .detect_statistic import DetectStatistic
+
 from logging import Logger, LogRecord, Handler, Formatter
+
 
 """
 Log 整体分为两个部分：
@@ -67,4 +69,21 @@ class BaseLogHandler(Handler):
             else:
                 self.record_buffer.add(_log_info)
 
+        将操作信息进行短期保存，不在前短界面直接显示，但是可以读取
+"""
 
+
+class ViewLogHandler(Handler):
+
+    def __new__(cls, *args, **kwargs):
+        pass
+
+    def __init__(self):
+        super(ViewLogHandler, self).__init__()
+        self.record_buffer = RecordBuffer()
+        self.detect_statistic = DetectStatistic()
+
+    def emit(self, record: LogRecord) -> None:
+        value = self.format(record)
+        self.record_buffer.add(value)
+        self.detect_statistic.add(value)
