@@ -1,10 +1,10 @@
 import logging
-from defectdetector.logger.logger import ViewLogHandler
+from defectdetector.logger.logger import BaseLogHandler
 
 
 def test_view_log_handler():
     log = logging.getLogger("test")
-    log_handler = ViewLogHandler()
+    log_handler = BaseLogHandler()
     log.setLevel(logging.INFO)
     log.addHandler(log_handler)
 

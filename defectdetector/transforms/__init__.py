@@ -4,6 +4,7 @@
 from .base import BaseTransform
 from .resize import Resize, ConvertColorspace
 
+
 class Transforms:
 
     METHOD = [
