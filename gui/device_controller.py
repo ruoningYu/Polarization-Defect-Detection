@@ -7,7 +7,6 @@ from PySide6.QtGui import (QStandardItemModel, QStandardItem)
 
 class DeviceController(QWidget):
 
-
     def __init__(self, camera=None, parent=None):
         super(DeviceController, self).__init__(parent)
         self.cam = camera

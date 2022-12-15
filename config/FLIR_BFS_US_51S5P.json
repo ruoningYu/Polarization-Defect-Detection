@@ -1,0 +1,1126 @@
+{
+  "property": {
+    "Camera Feature": {
+      "Root": {
+        "Acquisition Control": {
+          "Acquisition Mode": {
+            "entry_symbolic": "Continuous",
+            "type": "enumeration"
+          },
+          "Acquisition Frame Count": {
+            "value": 2,
+            "type": "integer"
+          },
+          "Acquisition Burst Frame Count": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Exposure Mode": {
+            "entry_symbolic": "Timed",
+            "type": "enumeration"
+          },
+          "Exposure Time": {
+            "value": 14993.0,
+            "type": "float"
+          },
+          "Exposure Auto": {
+            "entry_symbolic": "Continuous",
+            "type": "enumeration"
+          },
+          "Acquisition Frame Rate": {
+            "value": 8.565694939969896,
+            "type": "float"
+          },
+          "Resulting Frame Rate": {
+            "value": 7.5908633863205965,
+            "type": "float"
+          },
+          "Acquisition Frame Rate Enable": {
+            "value": false,
+            "type": "boolean"
+          },
+          "Acquisition Line Rate": {
+            "value": 168350.16818181818,
+            "type": "float"
+          },
+          "Trigger Selector": {
+            "entry_symbolic": "FrameStart",
+            "type": "enumeration"
+          },
+          "Trigger Mode": {
+            "entry_symbolic": "On",
+            "type": "enumeration"
+          },
+          "Trigger Source": {
+            "entry_symbolic": "Software",
+            "type": "enumeration"
+          },
+          "Trigger Overlap": {
+            "entry_symbolic": "Off",
+            "type": "enumeration"
+          },
+          "Trigger Delay": {
+            "value": 13.0,
+            "type": "float"
+          },
+          "Sensor Shutter Mode": {
+            "entry_symbolic": "Global",
+            "type": "enumeration"
+          }
+        },
+        "Analog Control": {
+          "Gain Selector": {
+            "entry_symbolic": "All",
+            "type": "enumeration"
+          },
+          "Gain": {
+            "value": 17.897908896641724,
+            "type": "float"
+          },
+          "Gain Auto": {
+            "entry_symbolic": "Continuous",
+            "type": "enumeration"
+          },
+          "Black Level Selector": {
+            "entry_symbolic": "All",
+            "type": "enumeration"
+          },
+          "Black Level": {
+            "value": 0.0,
+            "type": "float"
+          },
+          "Black Level Clamping Enable": {
+            "value": true,
+            "type": "boolean"
+          },
+          "Gamma": {
+            "value": 0.800048828125,
+            "type": "float"
+          },
+          "Gamma Enable": {
+            "value": true,
+            "type": "boolean"
+          }
+        },
+        "Image Format Control": {
+          "Sensor Width": {
+            "value": 2464,
+            "type": "integer"
+          },
+          "Sensor Height": {
+            "value": 2056,
+            "type": "integer"
+          },
+          "Width Max": {
+            "value": 2448,
+            "type": "integer"
+          },
+          "Height Max": {
+            "value": 2048,
+            "type": "integer"
+          },
+          "Multiple ROI Feature Enable": {
+            "value": false,
+            "type": "boolean"
+          },
+          "ROI Selector": {
+            "entry_symbolic": "ROI0",
+            "type": "enumeration"
+          },
+          "ROI Enable": {
+            "value": false,
+            "type": "boolean"
+          },
+          "ROI Width": {
+            "value": 2448,
+            "type": "integer"
+          },
+          "ROI Height": {
+            "value": 2048,
+            "type": "integer"
+          },
+          "ROI OffsetX": {
+            "value": 0,
+            "type": "integer"
+          },
+          "ROI OffsetY": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Resulting ROI Numbers": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Multiple ROI Configuration Valid": {
+            "entry_symbolic": "No",
+            "type": "enumeration"
+          },
+          "Width": {
+            "value": 2448,
+            "type": "integer"
+          },
+          "Height": {
+            "value": 2048,
+            "type": "integer"
+          },
+          "Offset X": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Offset Y": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Pixel Format": {
+            "entry_symbolic": "Polarized8",
+            "type": "enumeration"
+          },
+          "Pixel Size": {
+            "entry_symbolic": "Bpp8",
+            "type": "enumeration"
+          },
+          "Pixel Color Filter": {
+            "entry_symbolic": "None",
+            "type": "enumeration"
+          },
+          "Pixel Dynamic Range Min": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Pixel Dynamic Range Max": {
+            "value": 255,
+            "type": "integer"
+          },
+          "ISP Enable": {
+            "value": false,
+            "type": "boolean"
+          },
+          "Binning Selector": {
+            "entry_symbolic": "All",
+            "type": "enumeration"
+          },
+          "Binning Horizontal Mode": {
+            "entry_symbolic": "Sum",
+            "type": "enumeration"
+          },
+          "Binning Vertical Mode": {
+            "entry_symbolic": "Sum",
+            "type": "enumeration"
+          },
+          "Binning Horizontal": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Binning Vertical": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Decimation Selector": {
+            "entry_symbolic": "All",
+            "type": "enumeration"
+          },
+          "Decimation Horizontal Mode": {
+            "entry_symbolic": "Discard",
+            "type": "enumeration"
+          },
+          "Decimation Vertical Mode": {
+            "entry_symbolic": "Discard",
+            "type": "enumeration"
+          },
+          "Decimation Horizontal": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Decimation Vertical": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Reverse X": {
+            "value": false,
+            "type": "boolean"
+          },
+          "Reverse Y": {
+            "value": false,
+            "type": "boolean"
+          },
+          "Test Pattern Generator Selector": {
+            "entry_symbolic": "Sensor",
+            "type": "enumeration"
+          },
+          "Test Pattern": {
+            "entry_symbolic": "Off",
+            "type": "enumeration"
+          },
+          "ADC Bit Depth": {
+            "entry_symbolic": "Bit10",
+            "type": "enumeration"
+          }
+        },
+        "Device Control": {
+          "Device Scan Type": {
+            "entry_symbolic": "Areascan",
+            "type": "enumeration"
+          },
+          "Device Sensor Chroma": {
+            "entry_symbolic": "PolarizationMono",
+            "type": "enumeration"
+          },
+          "Device Vendor Name": {
+            "value": "FLIR",
+            "type": "string"
+          },
+          "Device Model Name": {
+            "value": "Blackfly S BFS-U3-51S5P",
+            "type": "string"
+          },
+          "Sensor Description": {
+            "value": "Sony IMX250 (2/3\" Polarization Mono CMOS)",
+            "type": "string"
+          },
+          "Device Manufacturer Info": {
+            "value": "Jun 18 2018 13:40:29",
+            "type": "string"
+          },
+          "Device Version": {
+            "value": "1804.2.7.0",
+            "type": "string"
+          },
+          "Device Firmware Version": {
+            "value": "1804.2.7.0",
+            "type": "string"
+          },
+          "Device Serial Number": {
+            "value": "20356253",
+            "type": "string"
+          },
+          "Device ID": {
+            "value": "20356253",
+            "type": "string"
+          },
+          "Device User ID": {
+            "value": "",
+            "type": "string"
+          },
+          "Device TL Type": {
+            "entry_symbolic": "USB3Vision",
+            "type": "enumeration"
+          },
+          "Device Gen CP Version Major": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Device Gen CP Version Minor": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Device Max Throughput": {
+            "value": 403460352,
+            "type": "integer"
+          },
+          "Device Link Speed": {
+            "value": 43000000,
+            "type": "integer"
+          },
+          "Device Link Throughput Limit": {
+            "value": 43000000,
+            "type": "integer"
+          },
+          "Device Link Bandwidth Reserve": {
+            "value": 0.0,
+            "type": "float"
+          },
+          "Device Link Current Throughput": {
+            "value": 38057491,
+            "type": "integer"
+          },
+          "Device Indicator Mode": {
+            "entry_symbolic": "Active",
+            "type": "enumeration"
+          },
+          "Device Temperature Selector": {
+            "entry_symbolic": "Sensor",
+            "type": "enumeration"
+          },
+          "Device Temperature": {
+            "value": 53.625,
+            "type": "float"
+          },
+          "Timestamp Latch Value": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Timestamp Increment": {
+            "value": 1000,
+            "type": "integer"
+          },
+          "Device Power Supply Selector": {
+            "entry_symbolic": "External",
+            "type": "enumeration"
+          },
+          "Power Supply Voltage": {
+            "value": 4.7109375,
+            "type": "float"
+          },
+          "Power Supply Current": {
+            "value": 0.443603515625,
+            "type": "float"
+          },
+          "Device Uptime": {
+            "value": 19569,
+            "type": "integer"
+          },
+          "Link Uptime": {
+            "value": 19565,
+            "type": "integer"
+          },
+          "Enumeration Count": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Max Device Reset Time": {
+            "value": 30000,
+            "type": "integer"
+          }
+        },
+        "Transport Layer Control": {
+          "Payload Size": {
+            "value": 5013504,
+            "type": "integer"
+          },
+          "TLParamsLocked": {
+            "value": 1,
+            "type": "integer"
+          },
+          "USB3 Vision": {
+            "Max Response Time": {
+              "value": 200,
+              "type": "integer"
+            },
+            "Message Channel": {
+              "value": 0,
+              "type": "integer"
+            },
+            "Access Privilege": {
+              "value": 0,
+              "type": "integer"
+            },
+            "U3V Version Major": {
+              "value": 1,
+              "type": "integer"
+            },
+            "U3V Version Minor": {
+              "value": 0,
+              "type": "integer"
+            },
+            "U3V Capability": {
+              "value": 0,
+              "type": "integer"
+            },
+            "U3V SIRM Available": {
+              "value": true,
+              "type": "boolean"
+            },
+            "U3V EIRM Available": {
+              "value": true,
+              "type": "boolean"
+            },
+            "U3V IIDC2 Available": {
+              "value": false,
+              "type": "boolean"
+            },
+            "Max Command Transfer Length": {
+              "value": 512,
+              "type": "integer"
+            },
+            "Max Ack Transfer Length": {
+              "value": 1024,
+              "type": "integer"
+            },
+            "Number of Stream Channels": {
+              "value": 1,
+              "type": "integer"
+            },
+            "Current Speed": {
+              "entry_symbolic": "HighSpeed",
+              "type": "enumeration"
+            }
+          },
+          "Link Error Count": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Link Recovery Count": {
+            "value": 0,
+            "type": "integer"
+          }
+        },
+        "Sequencer Control": {
+          "Sequencer Mode": {
+            "entry_symbolic": "Off",
+            "type": "enumeration"
+          },
+          "Sequencer Configuration Mode": {
+            "entry_symbolic": "Off",
+            "type": "enumeration"
+          },
+          "Sequencer Configuration Valid": {
+            "entry_symbolic": "No",
+            "type": "enumeration"
+          },
+          "Sequencer Configuration Reset": {
+            "value": "Resets the sequencer configuration by erasing all saved sequencer sets.",
+            "type": "command"
+          },
+          "Sequencer Feature Selector": {
+            "entry_symbolic": "ExposureTime",
+            "type": "enumeration"
+          },
+          "Sequencer Feature Enable": {
+            "value": true,
+            "type": "boolean"
+          },
+          "Sequencer Set Start": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Sequencer Set Selector": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Sequencer Set Valid": {
+            "entry_symbolic": "No",
+            "type": "enumeration"
+          },
+          "Sequencer Set Save": {
+            "value": "Saves the current device configuration to the currently selected sequencer set.",
+            "type": "command"
+          },
+          "Sequencer Set Load": {
+            "value": "Loads currently selected sequencer to the current device configuration.",
+            "type": "command"
+          },
+          "Sequencer Path Selector": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Sequencer Trigger Source": {
+            "entry_symbolic": "Off",
+            "type": "enumeration"
+          }
+        },
+        "Color Transformation Control": {},
+        "Auto Algorithm Control": {
+          "ROI Selector": {
+            "entry_symbolic": "Awb",
+            "type": "enumeration"
+          },
+          "Target Grey Value Auto": {
+            "entry_symbolic": "Continuous",
+            "type": "enumeration"
+          },
+          "Lighting Mode": {
+            "entry_symbolic": "Normal",
+            "type": "enumeration"
+          },
+          "Metering Mode": {
+            "entry_symbolic": "Average",
+            "type": "enumeration"
+          },
+          "Exposure Time Lower Limit": {
+            "value": 100.0,
+            "type": "float"
+          },
+          "Exposure Time Upper Limit": {
+            "value": 15000.0,
+            "type": "float"
+          },
+          "Gain Lower Limit": {
+            "value": 0.0,
+            "type": "float"
+          },
+          "Gain Upper Limit": {
+            "value": 18.000065071923338,
+            "type": "float"
+          },
+          "Target Grey Value Lower Limit": {
+            "value": 3.9100684261974585,
+            "type": "float"
+          },
+          "Target Grey Value Upper Limit": {
+            "value": 93.841642228739,
+            "type": "float"
+          },
+          "EV Compensation": {
+            "value": 0.0,
+            "type": "float"
+          },
+          "Auto Exposure Damping": {
+            "value": 0.5,
+            "type": "float"
+          },
+          "Auto Exposure Control Priority": {
+            "entry_symbolic": "Gain",
+            "type": "enumeration"
+          }
+        },
+        "Flat Field Correction Control": {
+          "Flat Field User Table Control": {}
+        },
+        "Defective Pixel Correction": {
+          "Defect Correct Static Enable": {
+            "value": true,
+            "type": "boolean"
+          },
+          "Defect Correction Mode": {
+            "entry_symbolic": "Average",
+            "type": "enumeration"
+          },
+          "Defect Table Pixel Count": {
+            "value": 141,
+            "type": "integer"
+          },
+          "Defect Table Index": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Defect X Coordinate": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Defect Y Coordinate": {
+            "value": 1086,
+            "type": "integer"
+          },
+          "Defect Table Apply": {
+            "value": "Applies the current defect table, so that any changes made affect images captured by the camera.",
+            "type": "command"
+          },
+          "Defect Table Factory Restore": {
+            "value": "Restores the factory default eeprom table.",
+            "type": "command"
+          }
+        },
+        "User Set Control": {
+          "User Set Selector": {
+            "entry_symbolic": "Default",
+            "type": "enumeration"
+          },
+          "User Set Load": {
+            "value": "Loads the User Set specified by UserSetSelector to the device and makes it active.",
+            "type": "command"
+          },
+          "User Set Save": {
+            "value": "Saves the User Set specified by UserSetSelector to the non-volatile memory of the device.",
+            "type": "command"
+          },
+          "User Set Default": {
+            "entry_symbolic": "Default",
+            "type": "enumeration"
+          },
+          "User Set Feature Selector": {
+            "entry_symbolic": "AasRoiEnableAe",
+            "type": "enumeration"
+          },
+          "User Set Feature Enable": {
+            "value": true,
+            "type": "boolean"
+          }
+        },
+        "Chunk Data Control": {
+          "Chunk Mode Active": {
+            "value": false,
+            "type": "boolean"
+          },
+          "Chunk Selector": {
+            "entry_symbolic": "FrameID",
+            "type": "enumeration"
+          },
+          "Chunk Enable": {
+            "value": false,
+            "type": "boolean"
+          },
+          "Chunk Gain Selector": {
+            "entry_symbolic": "All",
+            "type": "enumeration"
+          },
+          "Chunk Black Level Selector": {
+            "entry_symbolic": "All",
+            "type": "enumeration"
+          }
+        },
+        "LUT Control": {
+          "LUT Selector": {
+            "entry_symbolic": "LUT1",
+            "type": "enumeration"
+          },
+          "LUT Enable": {
+            "value": false,
+            "type": "boolean"
+          },
+          "LUT Index": {
+            "value": 0,
+            "type": "integer"
+          },
+          "LUT Value": {
+            "value": 0,
+            "type": "integer"
+          }
+        },
+        "Event Control": {
+          "Event Selector": {
+            "entry_symbolic": "Error",
+            "type": "enumeration"
+          },
+          "Event Notification": {
+            "entry_symbolic": "Off",
+            "type": "enumeration"
+          },
+          "Event Exposure End Data": {
+            "Event Exposure End": {
+              "value": 40003,
+              "type": "integer"
+            }
+          },
+          "Event Error Data": {
+            "Event Error": {
+              "value": 40000,
+              "type": "integer"
+            }
+          },
+          "Event Serial Port Receive Data": {
+            "Event Serial Port Receive": {
+              "value": 40005,
+              "type": "integer"
+            }
+          },
+          "Event Test Data": {
+            "Event Test": {
+              "value": 20479,
+              "type": "integer"
+            }
+          }
+        },
+        "Counter And Timer Control": {
+          "Counter Selector": {
+            "entry_symbolic": "Counter0",
+            "type": "enumeration"
+          },
+          "Counter Event Source": {
+            "entry_symbolic": "MHzTick",
+            "type": "enumeration"
+          },
+          "Counter Duration": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Counter Value": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Counter Trigger Source": {
+            "entry_symbolic": "ExposureStart",
+            "type": "enumeration"
+          },
+          "Counter Trigger Activation": {
+            "entry_symbolic": "RisingEdge",
+            "type": "enumeration"
+          },
+          "Counter Status": {
+            "entry_symbolic": "CounterTriggerWait",
+            "type": "enumeration"
+          },
+          "Counter Delay": {
+            "value": 0,
+            "type": "integer"
+          }
+        },
+        "Test Control": {
+          "Test Pending Ack": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Test 0001": {
+            "value": 0,
+            "type": "integer"
+          },
+          "GUI XML Manifest Address": {
+            "value": 4026535968,
+            "type": "integer"
+          }
+        },
+        "Logic Block Control": {
+          "Logic Block Selector": {
+            "entry_symbolic": "LogicBlock0",
+            "type": "enumeration"
+          },
+          "Logic Block LUT Selector": {
+            "entry_symbolic": "Value",
+            "type": "enumeration"
+          },
+          "Logic Block LUT Input Selector": {
+            "entry_symbolic": "Input0",
+            "type": "enumeration"
+          },
+          "Logic Block LUT Input Source": {
+            "entry_symbolic": "Zero",
+            "type": "enumeration"
+          },
+          "Logic Block LUT Input Activation": {
+            "entry_symbolic": "LevelHigh",
+            "type": "enumeration"
+          },
+          "Logic Block LUT Output Value All": {
+            "value": 255,
+            "type": "integer"
+          },
+          "Logic Block LUT Row Index": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Logic Block LUT Output Value": {
+            "value": true,
+            "type": "boolean"
+          }
+        },
+        "Digital IO Control": {
+          "Line Selector": {
+            "entry_symbolic": "Line0",
+            "type": "enumeration"
+          },
+          "Line Mode": {
+            "entry_symbolic": "Input",
+            "type": "enumeration"
+          },
+          "Line Inverter": {
+            "value": false,
+            "type": "boolean"
+          },
+          "Line Status": {
+            "value": false,
+            "type": "boolean"
+          },
+          "Line Status All": {
+            "value": 12,
+            "type": "integer"
+          },
+          "Input filter Selector": {
+            "entry_symbolic": "Deglitch",
+            "type": "enumeration"
+          },
+          "Line Filter Width": {
+            "value": 0.0,
+            "type": "float"
+          },
+          "Line Source": {
+            "entry_symbolic": "Off",
+            "type": "enumeration"
+          },
+          "Line Format": {
+            "entry_symbolic": "OptoCoupled",
+            "type": "enumeration"
+          },
+          "User Output Selector": {
+            "entry_symbolic": "UserOutput0",
+            "type": "enumeration"
+          },
+          "User Output Value": {
+            "value": false,
+            "type": "boolean"
+          },
+          "User Output Value All": {
+            "value": 0,
+            "type": "integer"
+          }
+        },
+        "Serial Port Control": {
+          "Serial Port Selector": {
+            "entry_symbolic": "SerialPort0",
+            "type": "enumeration"
+          },
+          "Serial Port Source": {
+            "entry_symbolic": "Off",
+            "type": "enumeration"
+          },
+          "Serial Port Baud Rate": {
+            "entry_symbolic": "Baud57600",
+            "type": "enumeration"
+          },
+          "Serial Port Data Bits": {
+            "value": 8,
+            "type": "integer"
+          },
+          "Serial Port Stop Bits": {
+            "entry_symbolic": "Bits1",
+            "type": "enumeration"
+          },
+          "Serial Port Parity": {
+            "entry_symbolic": "None",
+            "type": "enumeration"
+          },
+          "Transmit Queue Max Character Count": {
+            "value": 4096,
+            "type": "integer"
+          },
+          "Transmit Queue Current Character Count": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Receive Queue Max Character Count": {
+            "value": 4096,
+            "type": "integer"
+          },
+          "Receive Queue Current Character Count": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Receive Framing Error Count": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Receive Parity Error Count": {
+            "value": 0,
+            "type": "integer"
+          }
+        },
+        "File Access": {
+          "File Selector": {
+            "entry_symbolic": "UserSetDefault",
+            "type": "enumeration"
+          },
+          "File Operation Selector": {
+            "entry_symbolic": "Close",
+            "type": "enumeration"
+          },
+          "File Open Mode": {
+            "entry_symbolic": "Read",
+            "type": "enumeration"
+          },
+          "File Access Offset": {
+            "value": 0,
+            "type": "integer"
+          },
+          "File Access Length": {
+            "value": 4096,
+            "type": "integer"
+          },
+          "File Operation Status": {
+            "entry_symbolic": "Success",
+            "type": "enumeration"
+          },
+          "File Operation Result": {
+            "value": 0,
+            "type": "integer"
+          },
+          "File Size": {
+            "value": 1704,
+            "type": "integer"
+          }
+        },
+        "Transfer Control": {
+          "Transfer Control Mode": {
+            "entry_symbolic": "Basic",
+            "type": "enumeration"
+          },
+          "Transfer Queue Max Block Count": {
+            "value": 10,
+            "type": "integer"
+          },
+          "Transfer Queue Current Block Count": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Transfer Queue Overflow Count": {
+            "value": 0,
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "Transport Layer": {
+      "Root": {
+        "Device Information": {
+          "Device ID": {
+            "value": "USB\\VID_1E10&PID_4000\\01369C9D_0",
+            "type": "string"
+          },
+          "Device Serial Number": {
+            "value": "20356253",
+            "type": "string"
+          },
+          "Device Vendor Name  ": {
+            "value": "FLIR",
+            "type": "string"
+          },
+          "Device Model Name": {
+            "value": "Blackfly S BFS-U3-51S5P",
+            "type": "string"
+          },
+          "Device Type": {
+            "entry_symbolic": "USB3Vision",
+            "type": "enumeration"
+          },
+          "Device Display Name": {
+            "value": "FLIR Blackfly S BFS-U3-51S5P",
+            "type": "string"
+          },
+          "Device Access Status": {
+            "entry_symbolic": "OpenReadWrite",
+            "type": "enumeration"
+          },
+          "Device Version": {
+            "value": "1804.2.7.0",
+            "type": "string"
+          },
+          "Device Driver Version": {
+            "value": "PGRUSBCam3.sys : 2.7.3.563",
+            "type": "string"
+          },
+          "Device User ID": {
+            "value": "",
+            "type": "string"
+          },
+          "Device Is Updater Mode": {
+            "value": false,
+            "type": "boolean"
+          },
+          "DeviceInstanceId": {
+            "value": "USB\\VID_1E10&PID_4000\\01369C9D",
+            "type": "string"
+          },
+          "Device Location": {
+            "value": "Port_#0004.Hub_#0002",
+            "type": "string"
+          },
+          "Device Current Speed": {
+            "entry_symbolic": "HighSpeed",
+            "type": "enumeration"
+          },
+          "GUI XML Source": {
+            "entry_symbolic": "Device",
+            "type": "enumeration"
+          },
+          "GUI XML Path": {
+            "value": "Input.xml",
+            "type": "string"
+          },
+          "GenICam XML Source": {
+            "entry_symbolic": "Device",
+            "type": "enumeration"
+          },
+          "GenICam XML Path": {
+            "value": "",
+            "type": "string"
+          },
+          "Device Is In U3V Protocol": {
+            "value": true,
+            "type": "boolean"
+          },
+          "Device Port ID": {
+            "value": "",
+            "type": "string"
+          }
+        },
+        "Device Control": {
+          "Device Endianness Mechanism": {
+            "entry_symbolic": "Standard",
+            "type": "enumeration"
+          }
+        }
+      }
+    },
+    "Stream Parameters": {
+      "Root": {
+        "Stream Information": {
+          "Stream ID  ": {
+            "value": "0",
+            "type": "string"
+          },
+          "Stream Type": {
+            "entry_symbolic": "USB3Vision",
+            "type": "enumeration"
+          }
+        },
+        "Buffer Handling Control": {
+          "Manual Stream Buffer Count": {
+            "value": 10,
+            "type": "integer"
+          },
+          "Resulting Stream Buffer Count": {
+            "value": 10,
+            "type": "integer"
+          },
+          "Stream Buffer Count Max": {
+            "value": 846,
+            "type": "integer"
+          },
+          "Stream Buffer Count Mode": {
+            "entry_symbolic": "Manual",
+            "type": "enumeration"
+          },
+          "Stream Buffer Handling Mode": {
+            "entry_symbolic": "NewestFirst",
+            "type": "enumeration"
+          },
+          "Stream Announce Buffer Minimum": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Stream Announced Buffer Count": {
+            "value": 10,
+            "type": "integer"
+          },
+          "Stream Started Frame Count": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Stream Delivered Frame Count": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Stream Lost Frame Count": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Stream Input Buffer Count": {
+            "value": 10,
+            "type": "integer"
+          },
+          "Stream Output Buffer Count": {
+            "value": 0,
+            "type": "integer"
+          },
+          "Stream Block Transfer Size": {
+            "value": 1048576,
+            "type": "integer"
+          },
+          "CRC Check Enable": {
+            "value": false,
+            "type": "boolean"
+          },
+          "Stream Is Grabbing": {
+            "value": true,
+            "type": "boolean"
+          },
+          "Stream Chunk Count Maximum": {
+            "value": 50,
+            "type": "integer"
+          },
+          "Stream Buffer Alignment": {
+            "value": 1,
+            "type": "integer"
+          },
+          "Stream Dropped Frame Count": {
+            "value": 0,
+            "type": "integer"
+          }
+        },
+        "Stream Diagnostics": {
+          "Failed Buffer Count": {
+            "value": 0,
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import cv2
 
 
 class YoloX:
+
     def __init__(self, modelPath, confThreshold=0.35, nmsThreshold=0.5, objThreshold=0.5, backendId=0, targetId=0):
         self.num_classes = 80
         self.net = cv2.dnn.readNetFromONNX(modelPath)

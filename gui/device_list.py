@@ -82,6 +82,6 @@ class DeviceList(QWidget):
     def load_cam_info(self, cam_id):
         controller = DeviceController(self.cam)
         self.cam.select_camera(cam_id)
-        self.cam.init_camera()
+        self.cam.setup_cap()
         controller.refresh_feature_data()
         self.parent.load_current_cam_info(controller)

@@ -1,15 +1,20 @@
 import cv2
 import numpy as np
+from PIL import Image, ImageDraw, ImageFont
 
 from .yolox import YoloX
 from ..base import Detector
 
 
 class YoloxDetector(Detector):
+    """
+
+    """
 
     def __init__(self):
         super(YoloxDetector, self).__init__()
-        self.model = "D:\\code\\OpenCV Competition\\Polarization-Defect-Detection\\defectdetector\\detector\\yolox\\yolox_s.onnx"
+
+        self.model = "C:\\Users\\Ruoning\\Desktop\\Project\\Polarization-Defect-Detection\\defectdetector\\detector\\yolox\\yolox_s.onnx"
         self.confidence = 0.75
         self.nms = 0.5
         self.obj = 0.5
@@ -50,6 +55,7 @@ class YoloxDetector(Detector):
     def vis(self, dets, srcimg, letterbox_scale, fps=None):
         res_img = srcimg.copy()
 
+        class_type = []
         if fps is not None:
             fps_label = "FPS: %.2f" % fps
             cv2.putText(res_img, fps_label, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
@@ -57,21 +63,35 @@ class YoloxDetector(Detector):
         for det in dets:
             box = self.unletterbox(det[:4], letterbox_scale).astype(np.int32)
             score = det[-2]
-            
+
             if score < 0.5:
                 continue
 
             cls_id = int(det[-1])
 
             x0, y0, x1, y1 = box
+            class_name = self.classes[cls_id]
 
-            text = '{}:{:.1f}%'.format(self.classes[cls_id], score * 100)
+            if class_name not in class_type:
+                class_type.append(class_name)
+
+            text = '{}:{:.1f}%'.format(class_name, score * 100)
+
             font = cv2.FONT_HERSHEY_SIMPLEX
             txt_size = cv2.getTextSize(text, font, 0.4, 1)[0]
             cv2.rectangle(res_img, (x0, y0), (x1, y1), (0, 255, 0), 2)
             cv2.rectangle(res_img, (x0, y0 + 1), (x0 + txt_size[0] + 1, y0 + int(1.5 * txt_size[1])), (255, 255, 255),
                           -1)
             cv2.putText(res_img, text, (x0, y0 + txt_size[1]), font, 0.4, (0, 0, 0), thickness=1)
+
+        if "right_port" not in class_type:
+            res_text = "右侧端子缺失！"
+        elif "left_port" not in class_type:
+            res_text = "左侧端子缺失！"
+        else:
+            res_text = "端子完整！"
+
+        res_img = paint_chinese_opencv(res_img, res_text, 10, 25)
 
         return res_img
 
@@ -82,7 +102,6 @@ class YoloxDetector(Detector):
 
         input_blob, letterbox_scale = self.letterbox(input)
 
-
         # Inference
         tm.start()
         preds = self.model_net.infer(input_blob)
@@ -91,3 +110,27 @@ class YoloxDetector(Detector):
         img = self.vis(preds, input, letterbox_scale)
 
         return img
+
+
+def paint_chinese_opencv(img, text, left, top, textColor=(0, 255, 0), textSize=20):
+    """Display and add Chinese characters on the image
+
+    Args:
+        img (ndarray):  Images that need to add Chinese characters.
+        text (str): Text to be added.
+        left (int): The coordinates of the text, left.
+        top (int): The coordinates of the text, top.
+        textColor (tuple): Color of text.
+        textSize (int): Font size of text.
+
+    Returns:
+        ndarray: Image with text added
+    """
+    if isinstance(img, np.ndarray):
+        img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+    draw = ImageDraw.Draw(img)
+    font_style = ImageFont.truetype(
+        "C:\\Users\\Ruoning\\Desktop\\Project\\Polarization-Defect-Detection\\defectdetector\\detector\\yolox\\heiti.ttc",
+        textSize, encoding="utf-8")
+    draw.text((left, top), text, textColor, font=font_style)
+    return cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)

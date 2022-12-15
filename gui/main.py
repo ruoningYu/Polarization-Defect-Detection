@@ -17,7 +17,8 @@ class Ui_MainWindow(QMainWindow):
 
     def __init__(self):
         super(Ui_MainWindow, self).__init__()
-        self.cam = Camera()
+        config = "C:\\Users\\Ruoning\\Desktop\\Project\\Polarization-Defect-Detection\\config\\FLIR_BFS_US_51S5P.json"
+        self.cam = Camera(config)
         if not self.objectName():
             self.setObjectName(u"MainWindow")
         self.resize(1000, 700)
