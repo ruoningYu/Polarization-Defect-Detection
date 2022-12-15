@@ -6,7 +6,6 @@ from typing import Dict
 from logging import Handler, LogRecord
 
 
-
 class DetectStatistic:
 
     STATISTIC_INFO = dict()
@@ -30,10 +29,13 @@ class DetectStatistic:
         self._log_file = open(log_path, 'a+')
 
     def add(self, log: Dict):
-
+        if not isinstance(log, Dict):
+            return
+        if 'type' in log.keys():
+            self.record(log)
         self._log_file.writelines(log + "\n")
 
-    def filter(self, log: Dict):
+    def record(self, log: Dict):
         """
         此处将缺陷按照类型放入STATISTIC_INFO中进行记录
         """
@@ -41,15 +43,16 @@ class DetectStatistic:
         prod_info = dict(
             prod_id=log['prod_id'],
             located=list(
-
+                log['location']
             )
         )
         if defect_type not in self.STATISTIC_INFO.keys():
             self.STATISTIC_INFO.setdefault(defect_type, {
-                'num': 0, 'prod_info': [
-                    {'prod_id': log['prod_id']}
-                ]
+                'num': 0, 'prod_info': [prod_info]
             })
+        else:
+            self.STATISTIC_INFO[defect_type]['num'] += 1
+            self.STATISTIC_INFO[defect_type]['prod_info'].append(prod_info)
 
     def stop(self):
         self._log_file.close()

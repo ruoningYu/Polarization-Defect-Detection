@@ -3,7 +3,6 @@ import logging
 from defectdetector.logger.logger import BaseLogHandler
 
 
-
 def test_view_log_handler():
     log = logging.getLogger("test")
 

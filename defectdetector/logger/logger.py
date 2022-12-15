@@ -5,12 +5,13 @@ from .record_buffer import RecordBuffer
 from .detect_statistic import DetectStatistic
 
 from logging import Logger, LogRecord, Handler, Formatter
-
+from typing import Dict
 
 """
 Log 整体分为两个部分：
-    1、显示在前端界面中的检测信息
-        将检测记录进行永久性保存，记录在文件中
+    **
+        检测信息不在经由log模块进行记录与统计，转为直接记录
+    **
     2、后端代码的操作信息
         将操作信息进行短期保存，不在前端界面直接显示，但是可以调用显示
         
@@ -29,7 +30,7 @@ class DetectFormatter(Formatter):
     def __init__(self):
         super(DetectFormatter, self).__init__()
 
-    def format(self, record: LogRecord) -> str:
+    def format(self, record: LogRecord) -> Dict:
         msg = self.translate(record)
         return self.time_format(msg)
 
@@ -50,40 +51,21 @@ class DetectFormatter(Formatter):
 
 
 class BaseLogHandler(Handler):
-
+    """
+    所有的信息预处理在该类中完成：
+        包括：时间、记录类型、所属模块、记录级别、记录关键词
+    """
     def __init__(self, name=""):
         super(BaseLogHandler, self).__init__()
         self.name = name
 
-        self.det_formatter = DetectFormatter()
-        self.setFormatter(self.det_formatter)
+        self.setFormatter(DetectFormatter())
 
         self.record_buffer = RecordBuffer()
         self.detect_statistic = DetectStatistic()
 
     def emit(self, record: LogRecord) -> None:
+
         _log_info = self.format(record)
-        for attr in record.__dict__:
-            if attr == 'detector':
-                self.detect_statistic.add(_log_info)
-            else:
-                self.record_buffer.add(_log_info)
 
-        将操作信息进行短期保存，不在前短界面直接显示，但是可以读取
-"""
-
-
-class ViewLogHandler(Handler):
-
-    def __new__(cls, *args, **kwargs):
-        pass
-
-    def __init__(self):
-        super(ViewLogHandler, self).__init__()
-        self.record_buffer = RecordBuffer()
-        self.detect_statistic = DetectStatistic()
-
-    def emit(self, record: LogRecord) -> None:
-        value = self.format(record)
-        self.record_buffer.add(value)
-        self.detect_statistic.add(value)
+        self.record_buffer.add(_log_info)

@@ -1,94 +1,42 @@
-
 import PySpin
 
 MAX_CHARS = 100
 
-
-def get_string_node(node):
-    node_type = "string"
-    node_string = PySpin.CStringPtr(node)
-
-    display_name = node_string.GetDisplayName()
-    value = node_string.GetValue()
-    value = value[:MAX_CHARS] + '...' if len(value) > MAX_CHARS else value
-
-    node_info = {
-        display_name:
-            {
-                "value": value,
-                "type": node_type
-            },
-    }
-
-    return node_info
+NODES_TYPE = {
+    6: 'string',
+    2: 'integer',
+    5: 'float',
+    3: 'boolean',
+    4: 'command',
+}
 
 
-def get_integer_node(node):
-    node_type = "integer"
-    node_integer = PySpin.CIntegerPtr(node)
+def get_node_info(node):
+    """Gets information about a single node, including the node name
+    and corresponding value.
 
-    display_name = node_integer.GetDisplayName()
-    value = node_integer.GetValue()
+    Args:
+        node (IValue): A node object.
 
-    node_info = {
-        display_name:
-            {
-                "value": value,
-                "type": node_type
-            },
-    }
+    Returns:
+        node_info (Dict): Information for a node.
+    """
+    node_type = NODES_TYPE[node.GetPrincipalInterfaceType()]
+    _node = getattr(PySpin, f'C{node_type.title()}Ptr')(node)
+    display_name = _node.GetDisplayName()
 
-    return node_info
+    if node_type == 'command':
+        value = _node.GetToolTip()
+    else:
+        value = _node.GetValue()
 
-
-def get_float_node(node):
-    node_type = "float"
-    node_float = PySpin.CFloatPtr(node)
-
-    display_name = node_float.GetDisplayName()
-    value = node_float.GetValue()
+    if node_type == 'string' or node_type == 'command':
+        value = value[:MAX_CHARS] + '...' if len(value) > MAX_CHARS else value
 
     node_info = {
         display_name:
             {
                 "value": value,
-                "type": node_type
-            },
-    }
-
-    return node_info
-
-
-def get_boolean_node(node):
-    node_type = "boolean"
-    node_boolean = PySpin.CBooleanPtr(node)
-
-    display_name = node_boolean.GetDisplayName()
-    value = node_boolean.GetValue()
-
-    node_info = {
-        display_name:
-            {
-                "value": value,
-                "type": node_type
-            },
-    }
-
-    return node_info
-
-
-def get_commend_node(node):
-    node_type = "command"
-    node_commend = PySpin.CCommandPtr(node)
-
-    display_name = node_commend.GetDisplayName()
-    tooltip = node_commend.GetToolTip()
-    tooltip = tooltip[:MAX_CHARS] + '...' if len(tooltip) > MAX_CHARS else tooltip
-
-    node_info = {
-        display_name:
-            {
-                "tooltip": tooltip,
                 "type": node_type
             },
     }
@@ -97,14 +45,13 @@ def get_commend_node(node):
 
 
 def get_enumeration_node_and_current_entry(node):
-    """
+    """Gets information about enumerating class nodes.
 
-    Parameters
-    ----------
-    node
+    Args:
+        node (IValue): A node object.
 
-    Returns
-    -------
+    Returns:
+        node_info (Dict): Information for a node.
 
     """
     node_type = "enumeration"
@@ -126,22 +73,21 @@ def get_enumeration_node_and_current_entry(node):
 
 
 def get_category_node_and_all_feature(node, level, layer):
-    """
+    """Gets information about all nodes under a category node
+    based on the name and rank of that category.
 
-    Parameters
-    ----------
-    node (str): node节点
-    level (str): 层的等级
-    layer (int): 层的名称
+    Args:
+        node (IValue): A node object.
+        level (int):  The level of the layer.
+        layer (str): The name of the layer.
 
-    Returns (dict): 一个层下的所有节点
-    -------
-
+    Returns:
+        nodes_info_dict (Dict): Information about all nodes under the category node.
     """
     node_category = PySpin.CCategoryPtr(node)
     display_name = node_category.GetDisplayName()
 
-    temp_node_info_dict = {
+    nodes_info_dict = {
         display_name: dict()
     }
 
@@ -154,53 +100,42 @@ def get_category_node_and_all_feature(node, level, layer):
             _temp_node_info_dict = get_category_node_and_all_feature(node_feature, level + 1, layer)
             node_info = None
 
-        if node_feature.GetPrincipalInterfaceType() == PySpin.intfIString:
+        try:
+            node_info = get_node_info(node_feature)
+        except KeyError:
+            pass
 
-            node_info = get_string_node(node_feature)
-        elif node_feature.GetPrincipalInterfaceType() == PySpin.intfIInteger:
-
-            node_info = get_integer_node(node_feature)
-        elif node_feature.GetPrincipalInterfaceType() == PySpin.intfIFloat:
-
-            node_info = get_float_node(node_feature)
-        elif node_feature.GetPrincipalInterfaceType() == PySpin.intfIBoolean:
-
-            node_info = get_boolean_node(node_feature)
-        elif node_feature.GetPrincipalInterfaceType() == PySpin.intfICommand:
-
-            node_info = get_commend_node(node_feature)
-        elif node_feature.GetPrincipalInterfaceType() == PySpin.intfIEnumeration:
-
+        if node_feature.GetPrincipalInterfaceType() == PySpin.intfIEnumeration:
             node_info = get_enumeration_node_and_current_entry(node_feature)
 
         if node_info:
             try:
-                temp_node_info_dict[display_name].update(node_info)
+                nodes_info_dict[display_name].update(node_info)
             except KeyError:
                 pass
         else:
-            temp_node_info_dict[display_name].update(_temp_node_info_dict)
+            nodes_info_dict[display_name].update(_temp_node_info_dict)
 
-    return temp_node_info_dict
+    return nodes_info_dict
 
 
 def get_whole_nodemap(cam):
-    """
+    """Get a dictionary containing information about all the parameters
+    of the camera.
 
-    Parameters
-    ----------
-    cam (Camera): 一个相机实例
+    Args:
+        cam (Camera): A camera instance.
 
-    Returns (dict): 返回包含所有node的字典
-    -------
-
+    Returns:
+        nodemap_dict (Dict): A dict of all nodes and node information.
+        Used to display and manipulate all parameters of the camera.
     """
     level = 0
-    cam.Init()
     nodemap_dict = dict()
+
     nodemap_applayer = cam.GetNodeMap()
     nodemap_applayer_detail = get_category_node_and_all_feature(nodemap_applayer.GetNode('Root'), level,
-                                                                     "applayer")
+                                                                "applayer")
     nodemap_dict['Camera Feature'] = nodemap_applayer_detail
 
     nodemap_gentl = cam.GetTLDeviceNodeMap()
@@ -209,7 +144,7 @@ def get_whole_nodemap(cam):
 
     nodemap_tlstream = cam.GetTLStreamNodeMap()
     nodemap_tlstream_detail = get_category_node_and_all_feature(nodemap_tlstream.GetNode('Root'), level,
-                                                                     "tlstream")
+                                                                "tlstream")
     nodemap_dict['Stream Parameters'] = nodemap_tlstream_detail
 
     return nodemap_dict
