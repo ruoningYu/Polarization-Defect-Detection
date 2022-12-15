@@ -13,6 +13,7 @@ class YoloxDetector(Detector):
 
     def __init__(self):
         super(YoloxDetector, self).__init__()
+
         self.model = "C:\\Users\\Ruoning\\Desktop\\Project\\Polarization-Defect-Detection\\defectdetector\\detector\\yolox\\yolox_s.onnx"
         self.confidence = 0.75
         self.nms = 0.5
