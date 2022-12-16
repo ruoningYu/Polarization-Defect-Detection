@@ -295,6 +295,7 @@ class Camera(Controller):
         frame.Release()
         return image
 
+
     # todo 完成帧率计算函数
     def get_fps(self):
         """Gets the frame rate of the currently captured image.
