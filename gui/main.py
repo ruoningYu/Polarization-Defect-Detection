@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect)
 from PySide6.QtGui import QAction
@@ -17,7 +18,8 @@ class Ui_MainWindow(QMainWindow):
 
     def __init__(self):
         super(Ui_MainWindow, self).__init__()
-        config = "C:\\Users\\Ruoning\\Desktop\\Project\\Polarization-Defect-Detection\\config\\FLIR_BFS_US_51S5P.json"
+
+        config = "config/FLIR_BFS_US_51S5P.json"
         self.cam = Camera(config)
         if not self.objectName():
             self.setObjectName(u"MainWindow")
