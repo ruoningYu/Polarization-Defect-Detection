@@ -18,6 +18,7 @@ class Ui_MainWindow(QMainWindow):
 
     def __init__(self):
         super(Ui_MainWindow, self).__init__()
+
         config = "config/FLIR_BFS_US_51S5P.json"
         self.cam = Camera(config)
         if not self.objectName():
