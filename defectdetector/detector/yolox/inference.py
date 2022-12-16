@@ -1,12 +1,17 @@
 import cv2
 
 import numpy as np
+import logging
+
 from PIL import Image, ImageDraw, ImageFont
+from defectdetector.utils import singleton
+
 
 from .yolox import YoloX
 from ..base import Detector
 
 
+@singleton
 class YoloxDetector(Detector):
     """Get the detection results of Yolox and display the defect classification and score.
 
@@ -124,8 +129,9 @@ class YoloxDetector(Detector):
 
         return res_img
 
-    def __call__(self, input):
-        """Used to create a callable type to visualize all defect information.
+
+    def detect(self, input):
+
 
         Args:
             input(ndarray): Input image.

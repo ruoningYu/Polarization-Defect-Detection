@@ -1,10 +1,8 @@
-import time
 import cv2 as cv
 import numpy as np
-
 from PySide6.QtCore import QMetaObject, QCoreApplication, Slot, Qt, QTimer
-from PySide6.QtWidgets import QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QSizePolicy, QWidget
 from PySide6.QtGui import QImage, QPixmap
+from PySide6.QtWidgets import QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QSizePolicy, QWidget
 
 
 class Monitor(QWidget):

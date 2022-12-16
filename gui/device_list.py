@@ -1,4 +1,3 @@
-
 from PySide6.QtCore import (QMetaObject, Qt, QCoreApplication, Slot)
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from PySide6.QtWidgets import (QSizePolicy, QHBoxLayout, QStyleFactory, QWidget,
@@ -49,7 +48,7 @@ class DeviceList(QWidget):
         self.refleshDeviceButton.setText(
             QCoreApplication.translate("Display", u"\u5237\u65b0\u8bbe\u5907\u5217\u8868", None))
         DeviceInfo.setWindowTitle(QCoreApplication.translate("DeviceInfo", u"\u8bbe\u5907\u5217\u8868", None))
-        
+
     @Slot()
     def choose_camera(self):
         interface_model = self.cam.get_interface_model()
