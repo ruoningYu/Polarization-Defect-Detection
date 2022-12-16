@@ -3,7 +3,15 @@ import cv2
 
 
 class YoloX:
+    """Load a pre-training Yolox model from ONNX, and make target prediction for the input image.
 
+    Args:
+        modelPath: Path of the model.
+        confThreshold: A threshold used to filter boxes by score.
+        nmsThreshold: A threshold used in non-maximum suppression.
+        backendId: Specific computation backend supported by network.
+        targetId: Target identifier of the specific target device used for computations.
+    """
     def __init__(self, modelPath, confThreshold=0.35, nmsThreshold=0.5, objThreshold=0.5, backendId=0, targetId=0):
         self.num_classes = 80
         self.net = cv2.dnn.readNetFromONNX(modelPath)
@@ -23,21 +31,46 @@ class YoloX:
 
     @property
     def name(self):
+        """Add attribute of classname.
+
+        Returns:
+            name(str): name of class.
+        """
         return self.__class__.__name__
 
     def setBackend(self, backenId):
+        """Reset backend identifier for self.net.setPreferableBackend.
+        """
         self.backendId = backenId
         self.net.setPreferableBackend(self.backendId)
 
     def setTarget(self, targetId):
+        """Reset target identifier for self.net.setPreferableTarget.
+        """
         self.targetId = targetId
         self.net.setPreferableTarget(self.targetId)
 
     def preprocess(self, img):
+        """Pre-processing, changing the input dimension.
+
+        Args:
+            img(ndarray): Input image of the model.
+
+        Returns:
+            blob(ndarray): Preprocessed image.
+        """
         blob = np.transpose(img, (2, 0, 1))
         return blob[np.newaxis, :, :, :]
 
     def infer(self, srcimg):
+        """Infer the prediction of the input image from the model and provide classification.
+
+        Args:
+            srcimg(ndarray): Input image of the model.
+
+        Returns:
+            predictions(ndarray): Coordinates, classification scores and categories of objectives.
+        """
         input_blob = self.preprocess(srcimg)
 
         self.net.setInput(input_blob)
@@ -47,6 +80,14 @@ class YoloX:
         return predictions
 
     def postprocess(self, outputs):
+        """Get the defect category according to the model output.
+
+        Args:
+            outputs(ndarray): Output of model.
+
+        Returns:
+            candidates(ndarray): All objectives and their categories.
+        """
         dets = outputs[0]
 
         dets[:, :2] = (dets[:, :2] + self.grids) * self.expanded_strides
@@ -75,6 +116,11 @@ class YoloX:
         return candidates[keep]
 
     def generateAnchors(self):
+        """Generate Anchor coordinates at each stride.
+
+        Assign the coordinates at each stride to self.grids.
+        Assign the number of coordinates under each step to self.expanded_strides.
+        """
         self.grids = []
         self.expanded_strides = []
         hsizes = [self.input_size[0] // stride for stride in self.strides]
