@@ -5,7 +5,7 @@ import os
 
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect)
 from PySide6.QtGui import QAction
-from PySide6.QtWidgets import (QMainWindow, QApplication, QWidget, QMenuBar, 
+from PySide6.QtWidgets import (QMainWindow, QApplication, QWidget, QMenuBar,
                                QMenu, QStatusBar, QVBoxLayout, QHBoxLayout)
 
 from defectdetector.camera import Camera

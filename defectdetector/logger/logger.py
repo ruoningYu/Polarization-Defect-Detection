@@ -1,11 +1,9 @@
-import logging
 import time
-
-from .record_buffer import RecordBuffer
-from .detect_statistic import DetectStatistic
-
-from logging import Logger, LogRecord, Handler, Formatter
+from logging import LogRecord, Handler, Formatter
 from typing import Dict
+
+from .detect_statistic import DetectStatistic
+from .record_buffer import RecordBuffer
 
 """
 Log 整体分为两个部分：
@@ -54,6 +52,7 @@ class BaseLogHandler(Handler):
     所有的信息预处理在该类中完成：
         包括：时间、记录类型、所属模块、记录级别、记录关键词
     """
+
     def __init__(self, name=""):
         super(BaseLogHandler, self).__init__()
         self.name = name
@@ -64,7 +63,6 @@ class BaseLogHandler(Handler):
         self.detect_statistic = DetectStatistic()
 
     def emit(self, record: LogRecord) -> None:
-
         _log_info = self.format(record)
 
         self.record_buffer.add(_log_info)

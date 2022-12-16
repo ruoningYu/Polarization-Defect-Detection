@@ -1,10 +1,10 @@
+from typing import Dict, Union, Sequence
+
 import PySpin
 import numpy as np
 
-from typing import Dict, Union, Sequence
 from defectdetector.controller import Controller
 from defectdetector.utils import load_config, save_config
-
 from .nodemap import get_whole_nodemap
 
 
@@ -289,12 +289,11 @@ class Camera(Controller):
             raise print('Image incomplete with image status %d ...' % frame.GetImageStatus())
         else:
             data = frame.GetData()
-            height,  width = frame.GetHeight(), frame.GetWidth()
+            height, width = frame.GetHeight(), frame.GetWidth()
             channels = frame.GetNumChannels()
             image = np.reshape(data, (height, width, channels))
         frame.Release()
         return image
-
 
     # todo 完成帧率计算函数
     def get_fps(self):

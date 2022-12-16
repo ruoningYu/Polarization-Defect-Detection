@@ -6,7 +6,6 @@ from .resize import Resize, ConvertColorspace
 
 
 class Transforms:
-
     METHOD = [
         Resize, ConvertColorspace
     ]
@@ -15,4 +14,3 @@ class Transforms:
 __all__ = [
     'BaseTransform', 'Transforms'
 ]
-
