@@ -42,7 +42,6 @@ class Controller(QObject):
     include:
         system (PySpin.System):
             Retrieve singleton reference to system object
-            *** NOTES ***
             Everything originates with the system object. It is important to notice
             that it has a singleton implementation, so it is impossible to have
             multiple system objects at the same time. Users can only get a smart

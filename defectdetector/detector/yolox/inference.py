@@ -1,4 +1,5 @@
 import cv2
+
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
@@ -13,7 +14,7 @@ class YoloxDetector(Detector):
 
     def __init__(self):
         super(YoloxDetector, self).__init__()
-        self.model = "C:\\Users\\Ruoning\\Desktop\\Project\\Polarization-Defect-Detection\\defectdetector\\detector\\yolox\\yolox_s.onnx"
+        self.model = "defectdetector/detector/model/yolox_s.onnx"
         self.confidence = 0.75
         self.nms = 0.5
         self.obj = 0.5
@@ -128,8 +129,7 @@ def paint_chinese_opencv(img, text, left, top, textColor=(0, 255, 0), textSize=2
     if isinstance(img, np.ndarray):
         img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     draw = ImageDraw.Draw(img)
-    font_style = ImageFont.truetype(
-        "C:\\Users\\Ruoning\\Desktop\\Project\\Polarization-Defect-Detection\\defectdetector\\detector\\yolox\\heiti.ttc",
-        textSize, encoding="utf-8")
+    font_style = ImageFont.truetype("defectdetector/utils/heiti.ttc",
+                                    textSize, encoding="utf-8")
     draw.text((left, top), text, textColor, font=font_style)
     return cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
