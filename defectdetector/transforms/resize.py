@@ -1,5 +1,5 @@
-
 import cv2 as cv
+
 from .base import BaseTransform
 
 
@@ -18,8 +18,8 @@ class ConvertColorspace(BaseTransform):
     def __init__(self):
         super(ConvertColorspace, self).__init__()
 
-    def __call__(self, 
-                 img, 
+    def __call__(self,
+                 img,
                  convert_mode='COLOR_GRAY2RGB'):
         res = cv.cvtColor(img, getattr(cv, convert_mode))
         return res

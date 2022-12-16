@@ -1,4 +1,3 @@
-
 from PySide6.QtCore import (QMetaObject, QCoreApplication)
 from PySide6.QtWidgets import (QSizePolicy, QHBoxLayout, QVBoxLayout,
                                QToolButton, QTableView, QSpacerItem,
@@ -47,3 +46,7 @@ class LogViewer(QWidget):
         self.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.toolButton_3.setText(QCoreApplication.translate("Form", u"\u5bfc\u51fa", None))
         self.toolButton_2.setText(QCoreApplication.translate("Form", u"\u8fc7\u6ee4", None))
+
+    def update_log(self):
+        pass
+

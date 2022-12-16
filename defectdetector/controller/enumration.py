@@ -1,5 +1,7 @@
 import PySpin
 
+from logging import Logger
+
 
 class Enumeration:
     """Scan the interface list and get the device information.
@@ -7,12 +9,12 @@ class Enumeration:
         cam_dict (dict): All cameras information.
     """
 
-    def __init__(self):
+    def __init__(self, log: Logger):
+        self.log = log
         self.interface_info = dict()
         self.cam_dict = dict()
 
-    @staticmethod
-    def get_cam_name(cam):
+    def get_cam_name(self, cam):
         """Get the device name information.
 
         Args:
@@ -33,7 +35,7 @@ class Enumeration:
                 device_model_name = node_device_model_name.ToString()
 
         except PySpin.SpinnakerException as ex:
-            print('Error: %s' % ex)
+            self.log.error('Error: %s' % ex)
 
         return device_vendor_name, device_model_name
 
@@ -58,7 +60,7 @@ class Enumeration:
                 except UnicodeDecodeError:
                     interface_display_name = "Intel(R) USB 3.0 Scalable Host Controller"
             else:
-                print('Interface display name not readable')
+                self.log.error("Interface display name not readable")
 
             self.interface_info[interface_display_name] = []
 
@@ -89,7 +91,7 @@ class Enumeration:
                 self.cam_dict[device_vendor_name + " " + device_model_name] = cam
 
         except PySpin.SpinnakerException as ex:
-            print('Error: %s' % ex)
+            self.log.error('Error: %s' % ex)
             result = False
 
         return result
@@ -138,11 +140,15 @@ class Enumeration:
         Returns:
             Camera Instance.
         """
+        self.log.debug("Instantiates the camera")
         return self.cam_dict[cam_name]
 
     def __del__(self):
         """Interface and Cam lists must be cleared manually prior to a system release call.
         """
-        self.cam_list.Clear()
-        self.iface_list.Clear()
-
+        try:
+            self.cam_list.Clear()
+            self.iface_list.Clear()
+            self.log.info("Clear interface and cam lists")
+        except PySpin.SpinnakerException as ex:
+            self.log.error('Error: %s' % ex)

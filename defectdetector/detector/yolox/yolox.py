@@ -1,7 +1,10 @@
-import numpy as np
 import cv2
+import numpy as np
+
+from defectdetector.utils import singleton
 
 
+@singleton
 class YoloX:
 
     def __init__(self, modelPath, confThreshold=0.35, nmsThreshold=0.5, objThreshold=0.5, backendId=0, targetId=0):

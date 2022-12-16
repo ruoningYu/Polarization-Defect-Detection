@@ -1,12 +1,17 @@
 import cv2
 
 import numpy as np
+import logging
+
 from PIL import Image, ImageDraw, ImageFont
+from defectdetector.utils import singleton
+
 
 from .yolox import YoloX
 from ..base import Detector
 
 
+@singleton
 class YoloxDetector(Detector):
     """
 
@@ -96,7 +101,7 @@ class YoloxDetector(Detector):
 
         return res_img
 
-    def __call__(self, input):
+    def detect(self, input):
 
         tm = cv2.TickMeter()
         tm.reset()
@@ -130,7 +135,6 @@ def paint_chinese_opencv(img, text, left, top, textColor=(0, 255, 0), textSize=2
     if isinstance(img, np.ndarray):
         img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     draw = ImageDraw.Draw(img)
-
     font_style = ImageFont.truetype("defectdetector/utils/heiti.ttc",
                                     textSize, encoding="utf-8")
     draw.text((left, top), text, textColor, font=font_style)
