@@ -13,10 +13,17 @@ from ..base import Detector
 
 @singleton
 class YoloxDetector(Detector):
-    """
+    """Get the detection results of Yolox and display the defect classification and score.
 
+    Attributes:
+        model(str): Path of the model.
+        confidence(float): A threshold used to filter boxes by score.
+        nms(float): A threshold used in non-maximum suppression.
+        classes(tuple): All categories of defects.
+        backends(list): Specific computation backend supported by network.
+        targets(list): Target identifier of the specific target device used for computations.
+        model_net(yolox.YoloX): An instance of the Yolox class
     """
-
     def __init__(self):
         super(YoloxDetector, self).__init__()
 
@@ -45,6 +52,16 @@ class YoloxDetector(Detector):
 
     @staticmethod
     def letterbox(srcimg, target_size=(640, 640)):
+        """Scale the image and get the scaling ratio.
+
+        Args:
+            srcimg(ndarray): Input image.
+            target_size(tuple): Input Size.
+
+        Returns:
+            padded_img(ndarray): Scaled image.
+            ratio(float): Scaling ratio.
+        """
         padded_img = np.ones((target_size[0], target_size[1], 3)) * 114.0
         ratio = min(target_size[0] / srcimg.shape[0], target_size[1] / srcimg.shape[1])
         resized_img = cv2.resize(
@@ -59,6 +76,17 @@ class YoloxDetector(Detector):
         return bbox / letterbox_scale
 
     def vis(self, dets, srcimg, letterbox_scale, fps=None):
+        """Visualize all defect information.
+
+        Args:
+            dets(ndarray): Output of the Yolox model.
+            srcimg(ndarray): Input image.
+            letterbox_scale(float): Scaling ratio.
+            fps: The fps.
+
+        Returns:
+            res_img(ndarray): Image containing defect information.
+        """
         res_img = srcimg.copy()
 
         class_type = []
@@ -101,8 +129,16 @@ class YoloxDetector(Detector):
 
         return res_img
 
+
     def detect(self, input):
 
+
+        Args:
+            input(ndarray): Input image.
+
+        Returns:
+            img(ndarray): Output image with defect information.
+        """
         tm = cv2.TickMeter()
         tm.reset()
 
@@ -135,6 +171,7 @@ def paint_chinese_opencv(img, text, left, top, textColor=(0, 255, 0), textSize=2
     if isinstance(img, np.ndarray):
         img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     draw = ImageDraw.Draw(img)
+
     font_style = ImageFont.truetype("defectdetector/utils/heiti.ttc",
                                     textSize, encoding="utf-8")
     draw.text((left, top), text, textColor, font=font_style)
