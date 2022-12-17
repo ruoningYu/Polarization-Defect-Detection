@@ -13,4 +13,3 @@ def test_view_log_handler():
 
     for i in range(500):
         log.warning(f"test log info {i}")
-
