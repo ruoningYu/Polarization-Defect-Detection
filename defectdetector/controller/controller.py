@@ -115,8 +115,11 @@ class Controller(QObject):
     def get_frame(self):
         """Acquire the processed image and push it to the buffer
         """
-        frame = self.grab_next_image_by_trigger()
-        res = self.pipeline.run(frame)
+        frame_info = dict(
+            img=self.grab_next_image_by_trigger(),
+            msg=dict()
+        )
+        res = self.pipeline.run(frame_info)
         self.buffer.push(res)
 
     def stop(self):
