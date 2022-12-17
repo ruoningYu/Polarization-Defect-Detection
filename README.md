@@ -13,9 +13,11 @@ Defect Detection By Polarization Based On OpenCV
 - Language
     - Python-3.8
 - Package
-    - OpenCV-4.5
-    - PySide6
-    - PySpin
+  - OpenCV-4.5
+  - PySide6
+  - PySpin
+  - Pillow
+
 
 ### Get Start
 
