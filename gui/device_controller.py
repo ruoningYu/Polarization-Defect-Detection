@@ -1,8 +1,7 @@
-
-from PySide6.QtCore import (QMetaObject, QCoreApplication, QStringListModel, Signal)
-from PySide6.QtWidgets import (QSizePolicy, QHBoxLayout, QVBoxLayout, QWidget,
-                               QTabWidget, QWidget, QListView, QTreeView, QHeaderView)
+from PySide6.QtCore import (QMetaObject, QCoreApplication, QStringListModel)
 from PySide6.QtGui import (QStandardItemModel, QStandardItem)
+from PySide6.QtWidgets import (QSizePolicy, QHBoxLayout, QVBoxLayout, QTabWidget, QWidget, QListView, QTreeView,
+                               QHeaderView)
 
 
 class DeviceController(QWidget):
@@ -76,7 +75,7 @@ class DeviceController(QWidget):
 
         control_feature_tree = QTreeView(tab)
         verticalLayout.addWidget(control_feature_tree)
-        
+
         feature_model = self.get_feature_model()
         control_feature_tree.setModel(feature_model)
         control_feature_tree.header().setSectionResizeMode(QHeaderView.Stretch)
@@ -109,8 +108,8 @@ class DeviceController(QWidget):
                         node_type = node_map[layer]['Root'][category][item]['type']
                     except KeyError:
                         continue
-                    node_value = node['value'] if ('value' in node) else node['tooltip']\
-                        if ('tooltip'in node) else node['entry_symbolic']
+                    node_value = node['value'] if ('value' in node) else node['tooltip'] \
+                        if ('tooltip' in node) else node['entry_symbolic']
                     try:
                         if node_type == "string":
                             node_item = QStandardItem(item)

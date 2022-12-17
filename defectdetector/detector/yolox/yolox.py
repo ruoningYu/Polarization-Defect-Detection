@@ -1,7 +1,10 @@
-import numpy as np
 import cv2
+import numpy as np
+
+from defectdetector.utils import singleton
 
 
+@singleton
 class YoloX:
     """Load a pre-training Yolox model from ONNX, and make target prediction for the input image.
 

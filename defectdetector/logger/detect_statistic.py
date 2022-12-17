@@ -1,19 +1,14 @@
-import time
 import os
-import json
+import time
 
 from typing import Dict
-from logging import Handler, LogRecord
+from defectdetector.utils import singleton
 
 
+@singleton
 class DetectStatistic:
 
     STATISTIC_INFO = dict()
-
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, '_instance'):
-            cls._instance = super(DetectStatistic, cls).__new__(cls)
-        return cls._instance
 
     def __init__(self,
                  root: str = None
@@ -21,11 +16,11 @@ class DetectStatistic:
         if not root:
             root = os.path.dirname(os.path.abspath(__file__))
         self.current_data = time.strftime("%Y-%m-%d", time.localtime())
-        
+
         log_path = os.path.join(root, 'log', self.current_data)
 
-        if not os.path.exists(log_path):
-            open(log_path, "w")
+        # if not os.path.exists(log_path):
+        #     open(log_path, "w")
         self._log_file = open(log_path, 'a+')
 
     def add(self, log: Dict):
