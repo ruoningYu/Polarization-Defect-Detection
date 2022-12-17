@@ -13,10 +13,10 @@ Welcome to Polarization_Defect_Detection's documentation!
    defectdetector.camera
    defectdetector.controller
    defectdetector.detector
+   defectdetector.detector.yolox
    defectdetector.logger
    defectdetector.transforms
    defectdetector.utils
-   defectdetector.detector.yolox
 
 Indices and tables
 ==================
