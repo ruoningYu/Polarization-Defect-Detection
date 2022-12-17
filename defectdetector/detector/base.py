@@ -1,6 +1,7 @@
 import logging
 
 from typing import Dict
+
 from defectdetector.logger import BaseLogHandler
 from defectdetector.logger import DetectStatistic
 
@@ -20,3 +21,4 @@ class Detector:
 
     def __call__(self, frame_info: Dict):
         return self.detect(frame_info)
+

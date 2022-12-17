@@ -1,6 +1,7 @@
 import cv2 as cv
 
 from typing import Dict
+
 from .base import BaseTransform
 
 

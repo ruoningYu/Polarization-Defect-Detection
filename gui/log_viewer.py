@@ -1,4 +1,5 @@
 from PySide6.QtCore import (QMetaObject, QCoreApplication, Slot)
+
 from PySide6.QtWidgets import (QSizePolicy, QHBoxLayout, QVBoxLayout,
                                QToolButton, QSpacerItem, QWidget,
                                QTableView, QHeaderView)
@@ -66,3 +67,4 @@ class LogViewer(QWidget):
         self.table_item.setItem(self.buffer_size, 1, QStandardItem(log_info['module']))
         self.table_item.setItem(self.buffer_size, 2, QStandardItem(log_info['msg']))
         self.buffer_size += 1
+

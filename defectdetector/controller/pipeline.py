@@ -43,7 +43,9 @@ class Pipeline:
         Args:
             processor (BaseTransform): Image processing method or detection method
         """
+
         self.pipeline.append(processor())
+
         self.log.debug("Add a process to the pipeline")
 
     def remove(self, name):
@@ -74,4 +76,5 @@ class Pipeline:
         """
         for p in self.pipeline:
             frame = p(frame)
+
         return frame
