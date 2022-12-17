@@ -32,7 +32,7 @@ class Pipeline:
 
         for i, p in enumerate(Transforms.METHOD):
             if p in pipeline:
-                _pipeline.append(Transforms.METHOD[i])
+                _pipeline.append(Transforms.METHOD[i]())
 
         self.log.debug("Load the processing method into the pipeline")
         return _pipeline
@@ -43,7 +43,9 @@ class Pipeline:
         Args:
             processor (BaseTransform): Image processing method or detection method
         """
-        self.pipeline.append(processor)
+
+        self.pipeline.append(processor())
+
         self.log.debug("Add a process to the pipeline")
 
     def remove(self, name):
@@ -73,5 +75,6 @@ class Pipeline:
             frame (ndarray): Image that completes all processing procedures
         """
         for p in self.pipeline:
-            frame = p()(frame)
+            frame = p(frame)
+
         return frame

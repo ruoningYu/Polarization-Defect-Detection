@@ -1,7 +1,7 @@
 import cv2
-
 import numpy as np
-import logging
+
+from typing import Dict
 
 from PIL import Image, ImageDraw, ImageFont
 from defectdetector.utils import singleton
@@ -16,13 +16,13 @@ class YoloxDetector(Detector):
     """Get the detection results of Yolox and display the defect classification and score.
 
     Attributes:
-        model(str): Path of the model.
-        confidence(float): A threshold used to filter boxes by score.
-        nms(float): A threshold used in non-maximum suppression.
-        classes(tuple): All categories of defects.
-        backends(list): Specific computation backend supported by network.
-        targets(list): Target identifier of the specific target device used for computations.
-        model_net(yolox.YoloX): An instance of the Yolox class
+        model (str): Path of the model.
+        confidence (float): A threshold used to filter boxes by score.
+        nms (float): A threshold used in non-maximum suppression.
+        classes (tuple): All categories of defects.
+        backends (list): Specific computation backend supported by network.
+        targets (list): Target identifier of the specific target device used for computations.
+        model_net (yolox.YoloX): An instance of the Yolox class.
     """
     def __init__(self):
         super(YoloxDetector, self).__init__()
@@ -55,12 +55,12 @@ class YoloxDetector(Detector):
         """Scale the image and get the scaling ratio.
 
         Args:
-            srcimg(ndarray): Input image.
-            target_size(tuple): Input Size.
+            srcimg (ndarray): Input image.
+            target_size (tuple): Input Size.
 
         Returns:
-            padded_img(ndarray): Scaled image.
-            ratio(float): Scaling ratio.
+            padded_img (ndarray): Scaled image.
+            ratio (float): Scaling ratio.
         """
         padded_img = np.ones((target_size[0], target_size[1], 3)) * 114.0
         ratio = min(target_size[0] / srcimg.shape[0], target_size[1] / srcimg.shape[1])
@@ -75,24 +75,20 @@ class YoloxDetector(Detector):
     def unletterbox(bbox, letterbox_scale):
         return bbox / letterbox_scale
 
-    def vis(self, dets, srcimg, letterbox_scale, fps=None):
+    def vis(self, dets, srcimg, letterbox_scale):
         """Visualize all defect information.
 
         Args:
-            dets(ndarray): Output of the Yolox model.
-            srcimg(ndarray): Input image.
-            letterbox_scale(float): Scaling ratio.
-            fps: The fps.
+            dets (ndarray): Output of the Yolox model.
+            srcimg (ndarray): Input image.
+            letterbox_scale (float): Scaling ratio.
 
         Returns:
-            res_img(ndarray): Image containing defect information.
+            res_img (ndarray): Image containing defect information.
         """
         res_img = srcimg.copy()
 
         class_type = []
-        if fps is not None:
-            fps_label = "FPS: %.2f" % fps
-            cv2.putText(res_img, fps_label, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
         for det in dets:
             box = self.unletterbox(det[:4], letterbox_scale).astype(np.int32)
@@ -129,29 +125,22 @@ class YoloxDetector(Detector):
 
         return res_img
 
-
-    def detect(self, input):
-
+    def detect(self, frame_info: Dict):
+        """Used to create a callable type to visualize all defect information.
 
         Args:
-            input(ndarray): Input image.
+            frame_info (ndarray): Input image Info.
 
         Returns:
-            img(ndarray): Output image with defect information.
+            img (ndarray): Output image with defect information.
         """
-        tm = cv2.TickMeter()
-        tm.reset()
-
-        input_blob, letterbox_scale = self.letterbox(input)
-
-        # Inference
-        tm.start()
+        input_blob, letterbox_scale = self.letterbox(frame_info['img'])
         preds = self.model_net.infer(input_blob)
-        tm.stop()
 
-        img = self.vis(preds, input, letterbox_scale)
-
-        return img
+        frame_info['msg'] = dict(
+            preds=preds, letterbox_scale=letterbox_scale
+        )
+        return frame_info
 
 
 def paint_chinese_opencv(img, text, left, top, textColor=(0, 255, 0), textSize=20):
@@ -170,8 +159,8 @@ def paint_chinese_opencv(img, text, left, top, textColor=(0, 255, 0), textSize=2
     """
     if isinstance(img, np.ndarray):
         img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-    draw = ImageDraw.Draw(img)
 
+    draw = ImageDraw.Draw(img)
     font_style = ImageFont.truetype("defectdetector/utils/heiti.ttc",
                                     textSize, encoding="utf-8")
     draw.text((left, top), text, textColor, font=font_style)

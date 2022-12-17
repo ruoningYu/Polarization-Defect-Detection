@@ -75,8 +75,6 @@ class Monitor(QWidget):
         self.displayWindow.setText("")
 
     def load_wallpaper(self):
-        import os
-        print(os.getcwd())
         wallpaper = cv.imread("gui/static/wallpaper.png")
         h, w, ch = wallpaper.shape
         wallpaper = QImage(wallpaper, w, h, ch * w, QImage.Format_RGB888)
@@ -84,7 +82,6 @@ class Monitor(QWidget):
         self.displayWindow.setPixmap(QPixmap.fromImage(wallpaper))
 
     def set_image(self, image):
-
         if isinstance(image, np.ndarray):
             h, w, ch = image.shape
             image = QImage(image, w, h, ch * w, QImage.Format_RGB888)
@@ -99,13 +96,13 @@ class Monitor(QWidget):
             print("找不到当前相机或未选择相机！")
         self.startCapture.setEnabled(False)
         self.stopCapture.setEnabled(True)
-        self.get_frame_timer.start(50)
+        self.get_frame_timer.start(10)
 
     @Slot()
     def get_frame(self):
         self.cam.get_frame()
-        frame = self.cam.buffer.pop()
-        self.set_image(frame)
+        frame_info = self.cam.buffer.pop()
+        self.set_image(frame_info['img'])
 
     @Slot()
     def stop_cap(self):
@@ -114,3 +111,5 @@ class Monitor(QWidget):
         self.startCapture.setEnabled(True)
         self.get_frame_timer.stop()
         self.cam.stop()
+
+
