@@ -3,11 +3,13 @@
 """
 from .base import BaseTransform
 from .resize import Resize, ConvertColorspace
+from .demosaicking import Demosaic
+from .polar_character import PolarCharacter
 
 
 class Transforms:
     METHOD = [
-        Resize, ConvertColorspace
+        Resize, ConvertColorspace, Demosaic, PolarCharacter
     ]
 
 

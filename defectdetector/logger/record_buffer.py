@@ -9,14 +9,12 @@ MAX_LENGTH = 10000
 
 
 @singleton
-
 class RecordBuffer(QObject):
     """
     此函数用于记录系统的操作信息及系统报错
     """
     record_signal = Signal(dict)
     buffer = []
-
 
     def add(self, log: str):
         if len(self.buffer) < MAX_LENGTH:

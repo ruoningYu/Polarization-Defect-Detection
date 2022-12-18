@@ -141,7 +141,12 @@ class Enumeration:
             Camera Instance.
         """
         self.log.debug("Instantiates the camera")
-        return self.cam_dict[cam_name]
+        try:
+            target_cam = self.cam_dict[cam_name]
+        except KeyError:
+            pass
+
+        return target_cam
 
     def __del__(self):
         """Interface and Cam lists must be cleared manually prior to a system release call.
