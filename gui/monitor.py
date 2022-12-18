@@ -75,6 +75,7 @@ class Monitor(QWidget):
         self.displayWindow.setText("")
 
     def load_wallpaper(self):
+
         wallpaper = cv.imread("gui/static/wallpaper.png")
         h, w, ch = wallpaper.shape
         wallpaper = QImage(wallpaper, w, h, ch * w, QImage.Format_RGB888)
@@ -111,5 +112,4 @@ class Monitor(QWidget):
         self.startCapture.setEnabled(True)
         self.get_frame_timer.stop()
         self.cam.stop()
-
 
