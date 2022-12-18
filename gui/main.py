@@ -6,7 +6,7 @@ import os
 from PySide6.QtCore import (QCoreApplication, QMetaObject, Slot, QRect)
 from PySide6.QtGui import QAction
 from PySide6.QtWidgets import (QMainWindow, QApplication, QWidget, QMenuBar,
-                               QMenu, QStatusBar, QVBoxLayout, QHBoxLayout)
+                               QMenu, QStatusBar, QVBoxLayout, QHBoxLayout, QDialog)
 
 from defectdetector.camera import Camera
 from device_list import DeviceList
@@ -103,17 +103,33 @@ class Ui_MainWindow(QMainWindow):
     @Slot()
     def ClickABOUT(self):
         print('About Button')
-        self.AboutBox = About()
-        self.AboutBox.show()
+        AboutBox.show()
 
     @Slot()
     def ClickHELP(self):
         print('Help Button')
+        HelpBox.show()
+
+
+# 关于界面类
+class ABOUT(QDialog, About):
+    def __init__(self):
+        super(ABOUT, self).__init__()
+        self.setupUi(self)
+
+
+# 帮助界面类
+class HELP(QDialog, About):
+    def __init__(self):
+        super(HELP, self).__init__()
+        self.setupUi(self)
 
 
 # usage
 if __name__ == "__main__":
     app = QApplication()
+    AboutBox = ABOUT()
+    HelpBox = HELP()
     main = Ui_MainWindow()
     main.show()
     sys.exit(app.exec())

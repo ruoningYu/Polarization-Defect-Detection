@@ -2,3 +2,4 @@
 gui/defectdetector
 gui/__pycache__
 gui/AboutBox.ui
+gui/HelpBox.ui
