@@ -1,3 +1,4 @@
 .vscode/launch.json
 gui/defectdetector
 gui/__pycache__
+gui/AboutBox.ui
