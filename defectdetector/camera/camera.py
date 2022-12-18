@@ -1,10 +1,10 @@
+from typing import Dict, Union, Sequence
+
 import PySpin
 import numpy as np
 
-from typing import Dict, Union, Sequence
 from defectdetector.controller import Controller
 from defectdetector.utils import load_config, save_config
-
 from .nodemap import get_whole_nodemap
 
 
@@ -71,7 +71,7 @@ class Camera(Controller):
     def set_node(self,
                  node: Union[Dict, Sequence],
                  node_name: str,
-                 symbolic: str = None):
+                 symbolic: str = None) -> bool:
         """Set the node value based on the node name.
 
         Args:
@@ -96,18 +96,18 @@ class Camera(Controller):
             # nodes. Readability and writability are ensured by checking the
             # access mode or by using the methods
             if not PySpin.IsAvailable(node_mode) or not PySpin.IsWritable(node_mode):
-                print('Unable to set acquisition mode to continuous (enum retrieval). Aborting...')
+                self.log.error('Unable to set acquisition mode to continuous (enum retrieval). Aborting...')
                 return False
 
             node_entry = node_mode.GetEntryByName(symbolic)
             if not PySpin.IsAvailable(node_entry) or not PySpin.IsReadable(node_entry):
-                print('Unable to set acquisition mode to continuous (entry retrieval). Aborting...')
+                self.log.error('Unable to set acquisition mode to continuous (entry retrieval). Aborting...')
                 return False
 
             node_value = node_entry.GetValue()
             node_mode.SetIntValue(node_value)
         except PySpin.SpinnakerException as ex:
-            print('Error: %s' % ex)
+            self.log.error('Error: %s' % ex)
             return False
 
         return result
@@ -175,7 +175,8 @@ class Camera(Controller):
             handling_mode_entry = handling_mode.GetEntryByName('NewestFirst')
             handling_mode.SetIntValue(handling_mode_entry.GetValue())
             return True
-        except:
+        except PySpin.SpinnakerException as ex:
+            self.log.error('Error: %s' % ex)
             return False
 
     def set_trigger(self, trigger_config: Dict = None):
@@ -208,16 +209,16 @@ class Camera(Controller):
             # mode is off.
             node_trigger_source = PySpin.CEnumerationPtr(self.nodemap.GetNode('TriggerSource'))
             if not PySpin.IsAvailable(node_trigger_source) or not PySpin.IsWritable(node_trigger_source):
-                print('Unable to get trigger source (node retrieval). Aborting...')
+                self.log.error('Unable to get trigger source (node retrieval). Aborting...')
                 return False
 
             if self.trigger_type == 'SOFTWARE':
                 self.set_node(trigger_config['Trigger Source'], 'TriggerSource', 'Software')
-                print('Trigger source set to software...')
+                self.log.info("Trigger source set to software")
 
             elif self.trigger_type == 'HARDWARE':
                 self.set_node(trigger_config['Trigger Source'], 'TriggerSource', 'Line0')
-                print('Trigger source set to hardware...')
+                self.log.info('Trigger source set to hardware...')
 
             # Turn trigger mode on
             # Once the appropriate trigger source has been set, turn trigger mode
@@ -226,7 +227,7 @@ class Camera(Controller):
             self.set_node(trigger_mode, 'TriggerMode')
 
         except PySpin.SpinnakerException as ex:
-            print('Error: %s' % ex)
+            self.log.error('Error: %s' % ex)
             return False
 
         return True
@@ -263,17 +264,17 @@ class Camera(Controller):
                 # Execute software trigger
                 node_softwaretrigger_cmd = PySpin.CCommandPtr(self.nodemap.GetNode('TriggerSoftware'))
                 if not PySpin.IsAvailable(node_softwaretrigger_cmd) or not PySpin.IsWritable(node_softwaretrigger_cmd):
-                    print('Unable to execute trigger. Aborting...')
+                    self.log.error('Unable to execute trigger. Aborting...')
                     return False
                 node_softwaretrigger_cmd.Execute()
 
             elif self.trigger_type == 'HARDWARE':
-                print('Use the hardware to trigger image acquisition.')
+                self.log.info('Use the hardware to trigger image acquisition.')
 
             img = self.capture()
 
         except PySpin.SpinnakerException as ex:
-            print('Error: %s' % ex)
+            self.log.error('Error: %s' % ex)
             return False
 
         return img
@@ -286,15 +287,14 @@ class Camera(Controller):
         """
         frame = self.current_cam.GetNextImage(1000)
         if frame.IsIncomplete():
-            raise print('Image incomplete with image status %d ...' % frame.GetImageStatus())
+            self.log.error('Image incomplete with image status %d ...' % frame.GetImageStatus())
         else:
             data = frame.GetData()
-            height,  width = frame.GetHeight(), frame.GetWidth()
+            height, width = frame.GetHeight(), frame.GetWidth()
             channels = frame.GetNumChannels()
             image = np.reshape(data, (height, width, channels))
         frame.Release()
         return image
-
 
     # todo 完成帧率计算函数
     def get_fps(self):

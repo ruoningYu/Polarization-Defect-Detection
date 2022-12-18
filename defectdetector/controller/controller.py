@@ -1,15 +1,15 @@
-import PySpin
 import logging
+import PySpin
 
 from PySide6.QtCore import Slot, Signal, QObject
 from PySide6.QtGui import QImage
 
-from .enumration import Enumeration
-from .pipeline import Pipeline
-
+from defectdetector.detector import YoloxDetector
 from defectdetector.logger import BaseLogHandler
 from defectdetector.transforms import Transforms
-from defectdetector.detector import YoloxDetector
+
+from .enumration import Enumeration
+from .pipeline import Pipeline
 
 
 class Buffer:
@@ -64,14 +64,14 @@ class Controller(QObject):
     def __init__(self):
         super(Controller, self).__init__()
 
-        self.system = PySpin.System.GetInstance()
-        self.device_enum = Enumeration()
-        self.current_cam = None
-        self.buffer = Buffer()
-
-        self.log = logging.getLogger("test")
+        self.log = logging.getLogger(self.__class__.__name__)
         self.log.setLevel(logging.INFO)
         self.log.addHandler(BaseLogHandler())
+
+        self.system = PySpin.System.GetInstance()
+        self.device_enum = Enumeration(self.log)
+        self.current_cam = None
+        self.buffer = Buffer()
 
         self.pipeline = Pipeline(self.log, Transforms.METHOD)
         self.pipeline.add(YoloxDetector)
@@ -82,6 +82,7 @@ class Controller(QObject):
         Returns:
             interface_model (Dict): serial port on the host
         """
+        self.log.info("Scan the serial port on the host")
         return self.device_enum.get_interface_info(self.system)
 
     @Slot()
@@ -92,6 +93,7 @@ class Controller(QObject):
             current :Selected camera.
 
         """
+        self.log.info("Select the camera to be used")
         self.current_cam = self.device_enum.create_camera_instance(current.data())
 
     def get_cam(self):
@@ -113,11 +115,15 @@ class Controller(QObject):
     def get_frame(self):
         """Acquire the processed image and push it to the buffer
         """
-        frame = self.grab_next_image_by_trigger()
-        res = self.pipeline.run(frame)
+        frame_info = dict(
+            img=self.grab_next_image_by_trigger(),
+            msg=dict()
+        )
+        res = self.pipeline.run(frame_info)
         self.buffer.push(res)
 
     def stop(self):
         """Stop acquiring images and turn off the camera
         """
+        self.log.info("Stop acquiring images and turn off the camera")
         pass

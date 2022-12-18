@@ -1,24 +1,37 @@
 
 
-class RecordBuffer:
+from typing import Dict
+from defectdetector.utils import singleton
+from PySide6.QtCore import Slot, Signal, QObject
+
+
+MAX_LENGTH = 10000
+
+
+@singleton
+
+class RecordBuffer(QObject):
     """
     此函数用于记录系统的操作信息及系统报错
     """
+    record_signal = Signal(dict)
+    buffer = []
 
-    _buffer = []
-
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, '_instance'):
-            cls._instance = super(RecordBuffer, cls).__new__(cls)
-        return cls._instance
-
-    def __init__(self, max_length: int = 10000):
-        self.max_length = max_length
 
     def add(self, log: str):
-        if len(self._buffer) < self.max_length:
-            self._buffer.append(log)
+        if len(self.buffer) < MAX_LENGTH:
+            self.buffer.append(log)
+            self.emit_record(log)
         else:
-            self._buffer.pop()
-            self._buffer.append(log)
+            self.buffer.pop()
+            self.buffer.append(log)
+            self.emit_record(log)
 
+    def buffer_info(self):
+        return self.buffer
+
+    def emit_record(self, log):
+        self.record_signal.emit(log)
+
+    def __len__(self):
+        return len(self.buffer)
