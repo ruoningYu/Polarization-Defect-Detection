@@ -18,7 +18,6 @@ Defect Detection By Polarization Based On OpenCV
   - PySpin
   - Pillow
 
-
 ### Get Start
 
 `python gui/main.py`
