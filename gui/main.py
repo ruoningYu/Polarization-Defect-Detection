@@ -13,6 +13,7 @@ from device_list import DeviceList
 from log_viewer import LogViewer
 from monitor import Monitor
 from AboutBox import About
+from HelpBox import Help
 
 
 class Ui_MainWindow(QMainWindow):
@@ -119,7 +120,7 @@ class ABOUT(QDialog, About):
 
 
 # 帮助界面类
-class HELP(QDialog, About):
+class HELP(QDialog, Help):
     def __init__(self):
         super(HELP, self).__init__()
         self.setupUi(self)
