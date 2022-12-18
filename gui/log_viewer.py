@@ -1,5 +1,4 @@
 from PySide6.QtCore import (QMetaObject, QCoreApplication, Slot)
-
 from PySide6.QtWidgets import (QSizePolicy, QHBoxLayout, QVBoxLayout,
                                QToolButton, QSpacerItem, QWidget,
                                QTableView, QHeaderView)
@@ -33,6 +32,7 @@ class LogViewer(QWidget):
         self.table_item = QStandardItemModel(0, 3, self)
         self.table_item.setHorizontalHeaderLabels(['时间', '模块', '操作'])
         self.tableView.setModel(self.table_item)
+        self.tableView.setColumnWidth(0, 100)
         self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.verticalLayout.addWidget(self.tableView)
 
@@ -63,8 +63,8 @@ class LogViewer(QWidget):
 
     @Slot()
     def update_log(self, log_info):
+
         self.table_item.setItem(self.buffer_size, 0, QStandardItem(log_info['tm']))
         self.table_item.setItem(self.buffer_size, 1, QStandardItem(log_info['module']))
         self.table_item.setItem(self.buffer_size, 2, QStandardItem(log_info['msg']))
         self.buffer_size += 1
-

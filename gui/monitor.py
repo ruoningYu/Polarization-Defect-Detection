@@ -86,7 +86,7 @@ class Monitor(QWidget):
         if isinstance(image, np.ndarray):
             h, w, ch = image.shape
             image = QImage(image, w, h, ch * w, QImage.Format_RGB888)
-            image = image.scaled(640, 480, Qt.KeepAspectRatio)
+            # image = image.scaled(612, 512, Qt.KeepAspectRatio)
 
         self.displayWindow.setPixmap(QPixmap.fromImage(image))
 

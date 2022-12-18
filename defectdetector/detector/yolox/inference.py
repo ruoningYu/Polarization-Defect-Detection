@@ -4,14 +4,12 @@ import numpy as np
 from typing import Dict
 
 from PIL import Image, ImageDraw, ImageFont
-from defectdetector.utils import singleton
 
 
 from .yolox import YoloX
 from ..base import Detector
 
 
-@singleton
 class YoloxDetector(Detector):
     """Get the detection results of Yolox and display the defect classification and score.
 
@@ -136,6 +134,8 @@ class YoloxDetector(Detector):
         """
         input_blob, letterbox_scale = self.letterbox(frame_info['img'])
         preds = self.model_net.infer(input_blob)
+
+        frame_info['img'] = self.vis(preds, frame_info['img'], letterbox_scale)
 
         frame_info['msg'] = dict(
             preds=preds, letterbox_scale=letterbox_scale
