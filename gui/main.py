@@ -12,8 +12,8 @@ from defectdetector.camera import Camera
 from device_list import DeviceList
 from log_viewer import LogViewer
 from monitor import Monitor
-from AboutBox import About
-from HelpBox import Help
+from about_box import About
+from help_box import Help
 
 
 class Ui_MainWindow(QMainWindow):

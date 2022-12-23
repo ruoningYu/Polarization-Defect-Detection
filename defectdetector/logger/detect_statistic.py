@@ -7,6 +7,8 @@ from defectdetector.utils import singleton
 
 @singleton
 class DetectStatistic:
+    """Statistic the detection information.
+    """
 
     STATISTIC_INFO = dict()
 
@@ -31,8 +33,7 @@ class DetectStatistic:
         self._log_file.writelines(log + "\n")
 
     def record(self, log: Dict):
-        """
-        此处将缺陷按照类型放入STATISTIC_INFO中进行记录
+        """Put the defects into STATISTIC_INFO according to the type.
         """
         defect_type = log['type']
         prod_info = dict(

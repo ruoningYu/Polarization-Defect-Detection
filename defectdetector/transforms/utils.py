@@ -2,6 +2,14 @@ import numpy as np
 
 
 def pixel_normalization(img):
+    """Standardize the image
+
+    Args:
+        img (ndarray): Image to be processed
+
+    Returns:
+        img (ndarray): Processed image
+    """
     max_img = np.ones(img.shape) * np.nanmax(img)
     min_img = np.ones(img.shape) * np.nanmin(img)
     _img = max_img - min_img

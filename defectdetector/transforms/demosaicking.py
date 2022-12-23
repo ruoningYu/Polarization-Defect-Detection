@@ -5,15 +5,27 @@ from .base import BaseTransform
 
 
 class Demosaic(BaseTransform):
+    """Demosaicking Polarization Image
+    """
 
     def __init__(self):
         super(Demosaic, self).__init__()
 
     def __call__(self, img_info: Dict, interpolation=True):
+        """Demosaicking Polarization Image
+
+        Args:
+            img_info (Dict): Image info
+            interpolation (bool): Interpolation or not ↳
+
+        Returns:
+            img_info (Dict): Image info
+        """
         img = img_info['img']
 
-        height, width, channel = img.shape
+        height, width,channel = img.shape
 
+        # Slice the image
         _polar_angle = [i_0, i_45, i_90, i_135] = \
             img[0::2, 0::2, :], img[0::2, 1::2, :], img[1::2, 0::2, :], img[1::2, 1::2, :]
 

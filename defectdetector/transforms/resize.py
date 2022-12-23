@@ -24,4 +24,6 @@ class ConvertColorspace(BaseTransform):
                  img_info: Dict,
                  convert_mode='COLOR_GRAY2RGB'):
         img_info['img'] = cv.cvtColor(img_info['img'], getattr(cv, convert_mode))
+        # img_info['aolp'] = cv.cvtColor(img_info['aolp'], getattr(cv, convert_mode))
+
         return img_info
