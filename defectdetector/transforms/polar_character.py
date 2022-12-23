@@ -91,7 +91,6 @@ class PolarCharacter(BaseTransform):
     Args:
         characters (List): Parameters to be calculated
     """
-
     def __init__(self, characters: List = []):
         super(PolarCharacter, self).__init__()
         self.characters = characters
@@ -109,6 +108,7 @@ class PolarCharacter(BaseTransform):
         stokes = img_info['stokes']
 
         img_info['aolp'] = pixel_normalization(aolp(stokes))
+
         img_info['dolp'] = dolp(stokes)
         # img_info['l1'] = dolp(stokes)
         # img_info['l2'] = dolp(stokes)
