@@ -10,8 +10,7 @@ MAX_LENGTH = 10000
 
 @singleton
 class RecordBuffer(QObject):
-    """
-    此函数用于记录系统的操作信息及系统报错
+    """This function is used to record system operation information and system error.
     """
     record_signal = Signal(dict)
     buffer = []
